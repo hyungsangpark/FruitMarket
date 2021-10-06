@@ -49,7 +49,7 @@ abstract class Fruit implements IProduct {
         return priceMetric;
     }
 
-    public Boolean getInStock(){
+    public Boolean getIsInStock(){
         return inStock;
     }
 

@@ -1,5 +1,5 @@
 package com.example.fruitmarket.fruit;
 
-public class Apple {
+public class Apple extends Fruit{
 
 }
