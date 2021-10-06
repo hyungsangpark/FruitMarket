@@ -6,6 +6,6 @@ public interface IProduct {
     public Object getCategory();
     public Object getProducer();
     public Object getDescription();
-    public Object getIsInStock();
+    public Object getInStock();
 
 }

@@ -17,40 +17,88 @@ abstract class Fruit implements IProduct {
     private PriceMetric priceMetric;
     private Boolean inStock;
 
-    public String getName(){
-        return name;
-    };
+    public long getId() {
+        return id;
+    }
 
-    public String getCategory(){
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getCategory() {
         return category;
     }
 
-    public String getProducer(){
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public String getProducer() {
         return producer;
     }
 
-    public ArrayList<String> getImages(){
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public ArrayList<String> getImages() {
         return images;
     }
 
-    public String getVariety(){
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
+    public String getVariety() {
         return variety;
     }
 
-    public String[] getDescription(){
+    public void setVariety(String variety) {
+        this.variety = variety;
+    }
+
+    @Override
+    public String[] getDescription() {
         return description;
     }
 
-    public float getPrice(){
+    public void setDescription(String[] description) {
+        this.description = description;
+    }
+
+    public float getPrice() {
         return price;
     }
 
-    public PriceMetric getPriceMetric(){
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public PriceMetric getPriceMetric() {
         return priceMetric;
     }
 
-    public Boolean getIsInStock(){
+    public void setPriceMetric(PriceMetric priceMetric) {
+        this.priceMetric = priceMetric;
+    }
+
+    @Override
+    public Boolean getInStock() {
         return inStock;
     }
 
+    public void setInStock(Boolean inStock) {
+        this.inStock = inStock;
+    }
 }
