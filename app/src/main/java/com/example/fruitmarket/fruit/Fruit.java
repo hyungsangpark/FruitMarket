@@ -1,8 +1,11 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.fruit;
+
+import com.example.fruitmarket.IProduct;
+import com.example.fruitmarket.PriceMetric;
 
 import java.util.ArrayList;
 
-abstract class Fruit implements IProduct{
+abstract class Fruit implements IProduct {
     private long id;
     private String name;
     private String category;
