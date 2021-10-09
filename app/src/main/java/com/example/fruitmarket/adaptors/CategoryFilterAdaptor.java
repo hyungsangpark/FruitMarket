@@ -44,6 +44,25 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
         }
     }
 
+    public class MarginItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int verticalMargin;
+        private int horizontalMargin;
+
+        public MarginItemDecoration(int verticalMargin, int horizontalMargin) {
+            this.verticalMargin = verticalMargin;
+            this.horizontalMargin = horizontalMargin;
+        }
+
+        @Override
+        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            outRect.top = verticalMargin;
+            outRect.bottom = verticalMargin;
+            outRect.left = parent.getChildAdapterPosition(view) == 0 ? horizontalMargin * 2 : horizontalMargin;
+            outRect.right = parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() ? horizontalMargin * 2 : horizontalMargin;
+        }
+    }
+
     private List<String> mCategories;
     private Context mContext;
 
