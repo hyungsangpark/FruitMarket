@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.R;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipDrawable;
 
 import java.util.List;
 
@@ -23,20 +22,29 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public Chip itemCategoryFilterButton;
+        private boolean isSelected;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             // Initialize the view objects.
             itemCategoryFilterButton = itemView.findViewById(R.id.item_category_filter_button);
+            isSelected = false;
         }
 
         @Override
         public void onClick(View view) {
             String clickedCategory = mCategories.get(getAdapterPosition());
 
-            itemCategoryFilterButton.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.kiwi_green_light)));
-            itemCategoryFilterButton.setChipStrokeWidth(0);
+            if (!isSelected) {
+                itemCategoryFilterButton.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.kiwi_green_light)));
+                itemCategoryFilterButton.setChipStrokeWidth(0);
+                isSelected = true;
+            } else {
+                itemCategoryFilterButton.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(mContext, R.color.white)));
+                itemCategoryFilterButton.setChipStrokeWidthResource(R.dimen.category_filter_button_stroke_width);
+                isSelected = false;
+            }
 
             // TODO: Included Selected Category as the filter.
 
