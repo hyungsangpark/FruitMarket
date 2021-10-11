@@ -5,7 +5,6 @@
     android:id="@+id/item_category_filter_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="6dp"
     android:text="Grapes"
     android:textSize="16sp"
     app:chipBackgroundColor="@color/white"
