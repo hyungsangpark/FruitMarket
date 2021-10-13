@@ -15,7 +15,9 @@ abstract class Fruit implements IProduct {
     private String[] description;
     private float price;
     private PriceMetric priceMetric;
-    private Boolean inStock;
+    private boolean inStock;
+    private int popularity;
+    private boolean isFeatured;
 
     public long getId() {
         return id;
@@ -100,5 +102,21 @@ abstract class Fruit implements IProduct {
 
     public void setInStock(Boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public boolean checkIfFeatured() {
+        return isFeatured;
+    }
+
+    public void setIsFeatured(boolean isFeatured) {
+        this.isFeatured = isFeatured;
     }
 }
