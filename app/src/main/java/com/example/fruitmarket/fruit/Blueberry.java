@@ -6,6 +6,10 @@ public class Blueberry extends Fruit{
     private String colour;
     private Boolean outOfSeason;
 
+    public Blueberry() {
+
+    }
+
     public Boolean getRipe() {
         return ripe;
     }

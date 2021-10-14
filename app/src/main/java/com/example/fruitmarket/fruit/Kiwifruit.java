@@ -8,6 +8,10 @@ public class Kiwifruit extends Fruit{
     private Boolean containsHLActinidain;
     private Boolean outOfSeason;
 
+    public Kiwifruit() {
+
+    }
+
     public Boolean getRipe() {
         return ripe;
     }

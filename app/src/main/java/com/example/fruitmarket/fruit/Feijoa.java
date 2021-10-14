@@ -6,6 +6,10 @@ public class Feijoa {
     private Boolean outOfSeason;
     private float seedToPulpRatio;
 
+    public Feijoa() {
+
+    }
+
     public Boolean getRipe() {
         return ripe;
     }

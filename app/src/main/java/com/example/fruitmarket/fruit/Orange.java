@@ -8,6 +8,10 @@ public class Orange extends Fruit{
     private Boolean seedless;
     private Boolean sweetened;
 
+    public Orange() {
+
+    }
+
     public ProduceSeason getProduceSeason() {
         return produceSeason;
     }

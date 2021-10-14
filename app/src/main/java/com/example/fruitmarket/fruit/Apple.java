@@ -8,6 +8,10 @@ public class Apple extends Fruit{
     private String skinColour;
     private RelativeSize size;
 
+    public Apple() {
+
+    }
+
     public ProduceSeason getProduceSeason() {
         return produceSeason;
     }
