@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,9 +23,19 @@ import android.widget.Toast;
 
 import com.example.fruitmarket.adaptors.CategoryFilterAdaptor;
 import com.example.fruitmarket.adaptors.SearchAutoCompleteAdaptor;
+import com.example.fruitmarket.fruit.Apple;
+import com.example.fruitmarket.fruit.Blueberry;
+import com.example.fruitmarket.fruit.Feijoa;
+import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.fruit.Kiwifruit;
+import com.example.fruitmarket.fruit.Orange;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -38,6 +50,27 @@ public class SearchActivity extends AppCompatActivity {
     private CategoryFilterAdaptor categoryFilterButtonsAdapter;
     private ListView searchSuggestions;
     private SearchAutoCompleteAdaptor searchSuggestionsAdaptor;
+
+    // Perhaps a class like this can be used for each category filter item.
+    public static class FilterCategory {
+        private final String name;
+        private final int color;
+
+        public FilterCategory(String name, int color) {
+            this.name = name;
+            this.color = color;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getColor() {
+            return color;
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,15 +117,66 @@ public class SearchActivity extends AppCompatActivity {
         categories = Arrays.asList("Kiwifruit", "Apple", "Orange", "Blueberry", "Feijoa");
         categoryFilterButtonsAdapter = new CategoryFilterAdaptor(categories);
         rvButtons.setAdapter(categoryFilterButtonsAdapter);
-        rvButtons.addItemDecoration(categoryFilterButtonsAdapter.new MarginItemDecoration(
+        rvButtons.addItemDecoration(new CategoryFilterAdaptor.MarginItemDecoration(
                 (int) getResources().getDimension(R.dimen.category_filter_button_horizontal_margin),
                 (int) getResources().getDimension(R.dimen.category_filter_button_vertical_margin)));
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvButtons.setLayoutManager(lm);
 
         searchSuggestions = findViewById(R.id.search_suggestions_list_view);
-//        searchSuggestionsAdaptor = new SearchAutoCompleteAdaptor();
+        fetchFruitsData();
+    }
 
+    private void fetchFruitsData() {
+        List<Fruit> fruitsList = new LinkedList<>();
+
+        String[] collections = {"apples", "blueberries", "feijoas", "kiwifruits", "oranges"};
+        Fruit[] fruitCategoryInstances = {new Apple(), new Blueberry(), new Feijoa(), new Kiwifruit(), new Orange()};
+
+        // Getting apples collection from Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        for (int i = 0; i < fruitCategoryInstances.length; i++) {
+            int finalI = i;
+            db.collection(collections[i]).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
+                if (task.isSuccessful()) {
+                    for (Fruit apple : task.getResult().toObjects(fruitCategoryInstances[finalI].getClass())) {
+                        fruitsList.add(apple);
+                        Log.i("Parsing " + collections[finalI] , apple.getName() + " loaded.");
+                    }
+                    if (fruitsList.size() > 0) {
+                        Log.i("Getting numbers", "Success");
+                        // Once the task is successful and data is fetched, propagate the adaptor.
+                        propagateAdaptor(fruitsList);
+
+                        // Hide the progressBar
+                        // vh.progressBar.setVisiblity(View.GONE);
+                    } else {
+                        Toast.makeText(getBaseContext(),
+                                "Collection was empty!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                } else {
+                    Toast.makeText(getBaseContext(),
+                            "Loading apples collection failed from Firestore!",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+        }
+    }
+
+    private void propagateAdaptor(List<Fruit> data) {
+        List<String> searchKeywords = new ArrayList<>();
+        for (Fruit fruit : data) {
+            // TODO: Confirm what to include in the search keywords.
+            searchKeywords.add(fruit.getName());
+            searchKeywords.add(fruit.getProducer());
+            searchKeywords.add(fruit.getVariety());
+        }
+        SearchAutoCompleteAdaptor searchAutoCompleteAdaptor = new SearchAutoCompleteAdaptor(this, R.layout.item_search_suggestion, searchKeywords);
+        searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
     }
 
     @Override
