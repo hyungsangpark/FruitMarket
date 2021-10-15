@@ -2,7 +2,7 @@ package com.example.fruitmarket.fruit;
 
 public class Orange extends Fruit {
 
-    ProduceSeason season;
+    ProduceSeason produceSeason;
     String usage;
     String grade;
     Boolean seedless;
@@ -12,12 +12,12 @@ public class Orange extends Fruit {
 
     }
 
-    public ProduceSeason getSeason() {
-        return season;
+    public ProduceSeason getProduceSeason() {
+        return produceSeason;
     }
 
-    public void setSeason(ProduceSeason season) {
-        this.season = season;
+    public void setProduceSeason(ProduceSeason produceSeason) {
+        this.produceSeason = produceSeason;
     }
 
     public String getUsage() {
