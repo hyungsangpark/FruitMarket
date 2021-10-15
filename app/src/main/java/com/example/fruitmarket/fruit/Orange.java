@@ -1,23 +1,23 @@
 package com.example.fruitmarket.fruit;
 
-public class Orange extends Fruit{
+public class Orange extends Fruit {
 
-    private ProduceSeason produceSeason;
-    private String usage;
-    private String grade;
-    private Boolean seedless;
-    private Boolean sweetened;
+    ProduceSeason season;
+    String usage;
+    String grade;
+    Boolean seedless;
+    Boolean sweetened;
 
     public Orange() {
 
     }
 
-    public ProduceSeason getProduceSeason() {
-        return produceSeason;
+    public ProduceSeason getSeason() {
+        return season;
     }
 
-    public void setProduceSeason(ProduceSeason produceSeason) {
-        this.produceSeason = produceSeason;
+    public void setSeason(ProduceSeason season) {
+        this.season = season;
     }
 
     public String getUsage() {

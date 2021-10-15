@@ -2,20 +2,21 @@ package com.example.fruitmarket.fruit;
 
 import com.example.fruitmarket.IProduct;
 import com.example.fruitmarket.PriceMetric;
+import com.google.firebase.firestore.Exclude;
 
 import java.util.ArrayList;
 
-abstract class Fruit implements IProduct {
-    private long id;
-    private String name;
-    private String category;
-    private String producer;
-    private ArrayList<String> images;
-    private String variety;
-    private String[] description;
-    private float price;
-    private PriceMetric priceMetric;
-    private Boolean inStock;
+public abstract class Fruit implements IProduct {
+    long id;
+    String name;
+    String category;
+    String producer;
+    ArrayList<String> images;
+    String variety;
+    String description;
+    float price;
+    PriceMetric priceMetric;
+    boolean inStock;
 
     public long getId() {
         return id;
@@ -69,11 +70,11 @@ abstract class Fruit implements IProduct {
     }
 
     @Override
-    public String[] getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String[] description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -94,11 +95,11 @@ abstract class Fruit implements IProduct {
     }
 
     @Override
-    public Boolean getInStock() {
+    public boolean getInStock() {
         return inStock;
     }
 
-    public void setInStock(Boolean inStock) {
+    public void setInStock(boolean inStock) {
         this.inStock = inStock;
     }
 }
