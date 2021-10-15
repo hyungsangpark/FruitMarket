@@ -1,15 +1,12 @@
 package com.example.fruitmarket.adaptors;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.media.MediaPlayer;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,10 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.fruitmarket.R;
-import com.example.fruitmarket.fruit.Fruit;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterable {
@@ -32,15 +28,18 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
     // mLayoutId refers to the ListView item xml
     private final int mLayoutID;
     private List<String> mSearchItems;
+    private List<String> mSearchItemsSuggested;
     private List<String> mSearchHistory;
     private Context mContext;
 
     public SearchAutoCompleteAdaptor(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
-        mLayoutID = resource;
-        mSearchItems = objects;
-        mSearchHistory = new ArrayList<>();
         mContext = context;
+        mLayoutID = resource;
+        mSearchItemsSuggested = objects;
+        mSearchItems = new ArrayList<>(objects);
+//        mSearchItemsSuggested.removeAll(mSearchItems);
+        mSearchHistory = new ArrayList<>();
     }
 
     @NonNull
@@ -54,13 +53,13 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
                     .inflate(mLayoutID, parent, false);
         }
 
-        String currentSearchSuggestion = mSearchItems.get(position);
+        String currentSearchSuggestion = mSearchItemsSuggested.get(position);
 
         // Set image visibility based on whether it is present in the search history.
         ImageView historyIcon = currentSearchSuggestionItem
                 .findViewById(R.id.item_search_suggestion_history_image_view);
 
-        historyIcon.setVisibility(View.VISIBLE);
+        historyIcon.setVisibility(mSearchHistory.contains(currentSearchSuggestion) ? View.VISIBLE : View.INVISIBLE);
 
         TextView searchSuggestionTextView = currentSearchSuggestionItem
                 .findViewById(R.id.item_search_suggestion_text_view);
@@ -82,7 +81,44 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
     @Override
     public int getCount() {
 //        return Math.min(mSearchItems.size(), MAX_NUM_SUGGESTIONS);
-        return mSearchItems.size();
+        return mSearchItemsSuggested.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults filterResults = new FilterResults();
+
+                if (charSequence == null || charSequence.length() == 0) {
+                    filterResults.values = mSearchItems;
+                    filterResults.count = mSearchItems.size();
+                } else {
+                    List<String> result = new ArrayList<>();
+                    for (String searchKeyword : mSearchItems) {
+                        if (searchKeyword.toLowerCase().contains(charSequence.toString().toLowerCase())) result.add(searchKeyword);
+                    }
+
+                    // Assign the data to the FilterResults
+                    filterResults.values = result;
+                    Log.d("filterResults", result.toString());
+                    filterResults.count = result.size();
+                }
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                if (filterResults != null && filterResults.count > 0) {
+                    mSearchItemsSuggested = (List<String>) filterResults.values;
+                    notifyDataSetChanged();
+                } else {
+                    notifyDataSetInvalidated();
+                }
+            }
+        };
     }
 
 

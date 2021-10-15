@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:layout_margin="8dp"
     android:orientation="horizontal"
     android:padding="12dp">
 
@@ -11,10 +10,11 @@
         android:id="@+id/item_search_suggestion_history_image_view"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="25dp"
-        android:visibility="invisible"
-        android:src="@drawable/ic_schedule" />
+        android:visibility="visible"
+        android:src="@drawable/ic_schedule"
+        android:contentDescription="Search History Suggestion Logo" />
 
     <TextView
         android:id="@+id/item_search_suggestion_text_view"

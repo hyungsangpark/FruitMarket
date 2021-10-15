@@ -14,6 +14,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -130,6 +132,7 @@ public class SearchActivity extends AppCompatActivity {
     private void fetchFruitsData() {
         List<Fruit> fruitsList = new LinkedList<>();
 
+        // TODO: Extract these hard-coded values into DataProviders.
         String[] collections = {"apples", "blueberries", "feijoas", "kiwifruits", "oranges"};
         Fruit[] fruitCategoryInstances = {new Apple(), new Blueberry(), new Feijoa(), new Kiwifruit(), new Orange()};
 
@@ -145,12 +148,9 @@ public class SearchActivity extends AppCompatActivity {
                         Log.i("Parsing " + collections[finalI] , apple.getName() + " loaded.");
                     }
                     if (fruitsList.size() > 0) {
-                        Log.i("Getting numbers", "Success");
+                        Log.i("Getting fruits", "Success");
                         // Once the task is successful and data is fetched, propagate the adaptor.
                         propagateAdaptor(fruitsList);
-
-                        // Hide the progressBar
-                        // vh.progressBar.setVisiblity(View.GONE);
                     } else {
                         Toast.makeText(getBaseContext(),
                                 "Collection was empty!",
@@ -177,6 +177,21 @@ public class SearchActivity extends AppCompatActivity {
         }
         SearchAutoCompleteAdaptor searchAutoCompleteAdaptor = new SearchAutoCompleteAdaptor(this, R.layout.item_search_suggestion, searchKeywords);
         searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
+        searchSuggestions.setTextFilterEnabled(true);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchAutoCompleteAdaptor.getFilter().filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     @Override
