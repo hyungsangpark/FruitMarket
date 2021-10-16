@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 
+import com.example.fruitmarket.adapters.CategoryAdapter;
+import com.example.fruitmarket.adapters.TopPicksAdapter;
+import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.fruit.Category;
-import com.example.fruitmarket.fruit.DataProvider;
 import com.example.fruitmarket.fruit.Fruit;
 
 import java.util.ArrayList;
