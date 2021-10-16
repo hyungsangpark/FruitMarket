@@ -15,10 +15,8 @@ import androidx.cardview.widget.CardView;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
-        EditText priceEditText, usernameEditText;
-        TextView totalOrderTextView, quantityTextView;
-        CardView cardViewResults;
-        Button confirmButton;
+        TextView fruitNameTextView, producerTextView, descriptionTextView, priceTextView,
+                 availabilityTextView;
     }
 
     ViewHolder vh;
@@ -28,12 +26,13 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-//        vh = new ViewHolder();
-//        vh.priceEditText = (EditText) findViewById(R.id.price_edit_text);
-//        vh.totalOrderTextView = (TextView) findViewById(R.id.total_order_text_view);
-//        vh.quantityTextView = findViewById(R.id.quantity_text_view);
-//        vh.cardViewResults = (CardView) findViewById(R.id.card_view_result_message);
-//        vh.usernameEditText = (EditText) findViewById(R.id.edit_text_username);
-//        vh.confirmButton= (Button) findViewById(R.id.confirm_button);
+        vh = new ViewHolder();
+        vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
+        vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
+        vh.descriptionTextView = (TextView) findViewById(R.id.description_text_view);
+        vh.priceTextView = (TextView) findViewById(R.id.price_text_view);
+        vh.availabilityTextView = (TextView) findViewById(R.id.availability_text_view);
+
+        vh.fruitNameTextView.setText("Implement the rest when DataProvider is finished");
     }
 }
