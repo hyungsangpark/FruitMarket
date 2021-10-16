@@ -16,8 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.fruitmarket.adapters.CategoryAdapter;
+import com.example.fruitmarket.adapters.ListAdapter;
 import com.example.fruitmarket.fruit.Fruit;
-import com.example.fruitmarket.fruit.DataProvider;
+import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.fruit.Fruit;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_list_horizontal);
         dataProvider = DataProvider.getInstance(this);
 
         //Gets the intent
