@@ -10,9 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
 
 import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.TopPicksAdapter;
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager categoriesLayoutManager;
     CategoryAdapter categoryAdapter;
 
-    DataProvider dataProvider;
+    DataProvider dataProvider = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,40 +39,28 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        //Sets title in the action bar with spacing in between the logo and text
         setTitle("  " + "FruitMarket");
-        //Sets logo icon in the action bar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.logo_small);
+        getSupportActionBar().setLogo(R.mipmap.fruitmarket_logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        //Instantiates the dataProvider
-        dataProvider = DataProvider.getInstance(this);
-
-        // Find and assign Recycler views in activity_main layout
         topPicksRecyclerView = (RecyclerView) findViewById(R.id.top_picks);
         categoriesRecyclerView = (RecyclerView) findViewById(R.id.categories);
 
-        //Retrieving data from data provider
         topPicks = dataProvider.getMostPopular();
         categories = dataProvider.getCategoriesList();
 
-        // Create adapter to pass in data
         topPicksAdapter = new TopPicksAdapter(topPicks);
         categoryAdapter = new CategoryAdapter(categories);
 
-        // Attach the adapter to the recyclerview to populate items
         topPicksRecyclerView.setAdapter(topPicksAdapter);
         categoriesRecyclerView.setAdapter(categoryAdapter);
 
-        //Creating layout manager
         topPicksLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         categoriesLayoutManager = new LinearLayoutManager(this);
 
-        //Set layout manager to position the items
         topPicksRecyclerView.setLayoutManager(topPicksLayoutManager);
         categoriesRecyclerView.setLayoutManager(categoriesLayoutManager);
-
     }
 
     @Override
@@ -96,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 searchItem.collapseActionView();
 
                 //Create intent for SearchActivity containing the search query
-                Intent searchIntent = new Intent(getBaseContext(), SearchActivity.class);
+               /* Intent searchIntent = new Intent(getBaseContext(), SearchActivity.class);
                 searchIntent.putExtra("searchQuery", query);
-                startActivity(searchIntent);
+                startActivity(searchIntent);*/
 
                 return true;
             }
