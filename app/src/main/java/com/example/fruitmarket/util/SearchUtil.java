@@ -1,5 +1,10 @@
 package com.example.fruitmarket.util;
 
+import com.example.fruitmarket.fruit.Fruit;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchUtil {
     public SearchUtil() {}
 

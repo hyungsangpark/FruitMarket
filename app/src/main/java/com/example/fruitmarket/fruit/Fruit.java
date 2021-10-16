@@ -5,7 +5,7 @@ import com.example.fruitmarket.PriceMetric;
 
 import java.util.ArrayList;
 
-abstract class Fruit implements IProduct {
+public abstract class Fruit implements IProduct {
     private long id;
     private String name;
     private String category;
