@@ -1,11 +1,17 @@
 package com.example.fruitmarket.adaptors;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -22,11 +28,12 @@ import java.util.List;
 
 public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterable {
 
-    private static final int MAX_NUM_SUGGESTIONS = 3;
+    private static final int MAX_NUM_SUGGESTIONS = 10;
     private static final int MAX_NUM_HISTORY_SUGGESTIONS = 3;
 
     // mLayoutId refers to the ListView item xml
     private final int mLayoutID;
+    private String searchKeyword;
     private List<String> mSearchItems;
     private List<String> mSearchItemsSuggested;
     private List<String> mSearchHistory;
@@ -36,10 +43,14 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
         super(context, resource, objects);
         mContext = context;
         mLayoutID = resource;
+        searchKeyword = "";
         mSearchItemsSuggested = objects;
         mSearchItems = new ArrayList<>(objects);
 //        mSearchItemsSuggested.removeAll(mSearchItems);
         mSearchHistory = new ArrayList<>();
+        // TODO: Two lines below are for debug purposes.
+        mSearchHistory.add("Ho Seok's Orchard");
+        mSearchHistory.add("Orangy Orange");
     }
 
     @NonNull
@@ -59,29 +70,33 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
         ImageView historyIcon = currentSearchSuggestionItem
                 .findViewById(R.id.item_search_suggestion_history_image_view);
 
+        // Only show history icon on keywords that have already been searched.
         historyIcon.setVisibility(mSearchHistory.contains(currentSearchSuggestion) ? View.VISIBLE : View.INVISIBLE);
 
         TextView searchSuggestionTextView = currentSearchSuggestionItem
                 .findViewById(R.id.item_search_suggestion_text_view);
+        int matchingTextStartIndex = currentSearchSuggestion.toLowerCase().indexOf(searchKeyword);
 
-//        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(currentSearchSuggestion);
-//        spannableStringBuilder.setSpan(
-//                new StyleSpan(Typeface.BOLD),
-//                MATCHING_TEXT_INT_START,
-//                MATCHING_TEXT_INT_END,
-//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//        );
-//        searchSuggestionTextView.setText(spannableStringBuilder);
+        if (matchingTextStartIndex == -1) {
+            searchSuggestionTextView.setText(currentSearchSuggestion);
+        } else {
+            int matchingTextEndIndex = matchingTextStartIndex + searchKeyword.length();
 
-        searchSuggestionTextView.setText(currentSearchSuggestion);
+            String text = currentSearchSuggestion.substring(0, matchingTextStartIndex) +
+                    "<font face='sans-serif-black'>" +
+                    currentSearchSuggestion.substring(matchingTextStartIndex, matchingTextEndIndex) +
+                    "</font>" +
+                    currentSearchSuggestion.substring(matchingTextEndIndex);
+            searchSuggestionTextView.setText(Html.fromHtml(text));
+        }
 
         return currentSearchSuggestionItem;
     }
 
     @Override
     public int getCount() {
-//        return Math.min(mSearchItems.size(), MAX_NUM_SUGGESTIONS);
-        return mSearchItemsSuggested.size();
+        return Math.min(mSearchItemsSuggested.size(), MAX_NUM_SUGGESTIONS);
+//        return mSearchItemsSuggested.size();
     }
 
     @Override
@@ -92,12 +107,15 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
                 FilterResults filterResults = new FilterResults();
 
                 if (charSequence == null || charSequence.length() == 0) {
+                    searchKeyword = "";
                     filterResults.values = mSearchItems;
-                    filterResults.count = mSearchItems.size();
+//                    filterResults.count = mSearchItems.size();
+                    filterResults.count = Math.min(mSearchItems.size(), MAX_NUM_SUGGESTIONS);
                 } else {
+                    searchKeyword = charSequence.toString().toLowerCase();
                     List<String> result = new ArrayList<>();
-                    for (String searchKeyword : mSearchItems) {
-                        if (searchKeyword.toLowerCase().contains(charSequence.toString().toLowerCase())) result.add(searchKeyword);
+                    for (String searchItem : mSearchItems) {
+                        if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
                     }
 
                     // Assign the data to the FilterResults
@@ -111,12 +129,8 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                if (filterResults != null && filterResults.count > 0) {
-                    mSearchItemsSuggested = (List<String>) filterResults.values;
-                    notifyDataSetChanged();
-                } else {
-                    notifyDataSetInvalidated();
-                }
+                mSearchItemsSuggested = (List<String>) filterResults.values;
+                notifyDataSetChanged();
             }
         };
     }
