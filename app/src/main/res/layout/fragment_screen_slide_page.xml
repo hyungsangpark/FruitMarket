@@ -1,12 +1,13 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-    <TextView style="?android:textAppearanceMedium"
-        android:padding="16dp"
-        android:lineSpacingMultiplier="1.2"
+    <!-- image viwer to view the images -->
+    <ImageView
+        android:id="@+id/imageViewMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="lol" />
-</ScrollView>
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

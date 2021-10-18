@@ -1,6 +1,6 @@
 package com.example.fruitmarket;
 
-public interface IProduct {
+public interface    IProduct {
 
     public String getName();
     public Object getCategory();
