@@ -1,14 +1,14 @@
-package com.example.fruitmarket.fruit;
+package com.example.fruitmarket.models;
 
-public class Apple extends Fruit{
+public class Orange extends Fruit {
 
     ProduceSeason produceSeason;
     String usage;
     String grade;
-    String skinColour;
-    RelativeSize size;
+    Boolean seedless;
+    Boolean sweetened;
 
-    public Apple() {
+    public Orange() {
 
     }
 
@@ -36,19 +36,19 @@ public class Apple extends Fruit{
         this.grade = grade;
     }
 
-    public String getSkinColour() {
-        return skinColour;
+    public Boolean getSeedless() {
+        return seedless;
     }
 
-    public void setSkinColour(String skinColour) {
-        this.skinColour = skinColour;
+    public void setSeedless(Boolean seedless) {
+        this.seedless = seedless;
     }
 
-    public RelativeSize getSize() {
-        return size;
+    public Boolean getSweetened() {
+        return sweetened;
     }
 
-    public void setSize(RelativeSize size) {
-        this.size = size;
+    public void setSweetened(Boolean sweetened) {
+        this.sweetened = sweetened;
     }
 }

@@ -1,8 +1,7 @@
 package com.example.fruitmarket.data;
 
-import com.example.fruitmarket.MainActivity;
-import com.example.fruitmarket.fruit.Category;
-import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.models.Category;
+import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
 

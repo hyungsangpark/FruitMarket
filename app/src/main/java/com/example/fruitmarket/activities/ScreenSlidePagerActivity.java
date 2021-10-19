@@ -1,4 +1,4 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.activities;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.fruitmarket.R;
 
 public class ScreenSlidePagerActivity extends FragmentActivity {
     /**

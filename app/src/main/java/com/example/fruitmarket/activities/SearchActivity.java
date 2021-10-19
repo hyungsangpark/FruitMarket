@@ -1,11 +1,9 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.activities;
 
 import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,14 +21,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.fruitmarket.adaptors.CategoryFilterAdaptor;
-import com.example.fruitmarket.adaptors.SearchAutoCompleteAdaptor;
-import com.example.fruitmarket.fruit.Apple;
-import com.example.fruitmarket.fruit.Blueberry;
-import com.example.fruitmarket.fruit.Feijoa;
-import com.example.fruitmarket.fruit.Fruit;
-import com.example.fruitmarket.fruit.Kiwifruit;
-import com.example.fruitmarket.fruit.Orange;
+import com.example.fruitmarket.R;
+import com.example.fruitmarket.adapters.CategoryFilterAdapter;
+import com.example.fruitmarket.adapters.SearchAutoCompleteAdapter;
+import com.example.fruitmarket.models.Apple;
+import com.example.fruitmarket.models.Blueberry;
+import com.example.fruitmarket.models.Feijoa;
+import com.example.fruitmarket.models.Fruit;
+import com.example.fruitmarket.models.Kiwifruit;
+import com.example.fruitmarket.models.Orange;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,9 +48,9 @@ public class SearchActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> mStartVoiceSearch;
     private List<String> categories;
     private RecyclerView rvButtons;
-    private CategoryFilterAdaptor categoryFilterButtonsAdapter;
+    private CategoryFilterAdapter categoryFilterButtonsAdapter;
     private ListView searchSuggestions;
-    private SearchAutoCompleteAdaptor searchSuggestionsAdaptor;
+    private SearchAutoCompleteAdapter searchSuggestionsAdaptor;
 
     // Perhaps a class like this can be used for each category filter item.
     public static class FilterCategory {
@@ -117,9 +116,9 @@ public class SearchActivity extends AppCompatActivity {
         rvButtons = findViewById(R.id.category_filter_recycler_view);
         // TODO: Modify this array to import from a legitimate source of these categories.
         categories = Arrays.asList("Kiwifruit", "Apple", "Orange", "Blueberry", "Feijoa");
-        categoryFilterButtonsAdapter = new CategoryFilterAdaptor(categories);
+        categoryFilterButtonsAdapter = new CategoryFilterAdapter(categories);
         rvButtons.setAdapter(categoryFilterButtonsAdapter);
-        rvButtons.addItemDecoration(new CategoryFilterAdaptor.MarginItemDecoration(
+        rvButtons.addItemDecoration(new CategoryFilterAdapter.MarginItemDecoration(
                 (int) getResources().getDimension(R.dimen.category_filter_button_horizontal_margin),
                 (int) getResources().getDimension(R.dimen.category_filter_button_vertical_margin)));
 
@@ -176,7 +175,7 @@ public class SearchActivity extends AppCompatActivity {
             searchKeywords.add(fruit.getProducer());
             searchKeywords.add(fruit.getVariety());
         }
-        SearchAutoCompleteAdaptor searchAutoCompleteAdaptor = new SearchAutoCompleteAdaptor(this, R.layout.item_search_suggestion, searchKeywords);
+        SearchAutoCompleteAdapter searchAutoCompleteAdaptor = new SearchAutoCompleteAdapter(this, R.layout.item_search_suggestion, searchKeywords);
         searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
         searchSuggestions.setTextFilterEnabled(true);
         searchEditText.addTextChangedListener(new TextWatcher() {

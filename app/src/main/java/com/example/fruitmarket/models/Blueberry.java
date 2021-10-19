@@ -1,4 +1,4 @@
-package com.example.fruitmarket.fruit;
+package com.example.fruitmarket.models;
 
 public class Blueberry extends Fruit{
 

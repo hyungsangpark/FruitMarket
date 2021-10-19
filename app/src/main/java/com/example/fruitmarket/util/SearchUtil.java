@@ -1,6 +1,6 @@
 package com.example.fruitmarket.util;
 
-import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
 import java.util.List;

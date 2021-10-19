@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fruitmarket.ListActivity;
-import com.example.fruitmarket.fruit.Category;
+import com.example.fruitmarket.activities.ListActivity;
+import com.example.fruitmarket.models.Category;
 
 import java.util.List;
 

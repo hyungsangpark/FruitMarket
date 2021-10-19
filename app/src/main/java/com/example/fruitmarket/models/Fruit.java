@@ -1,7 +1,4 @@
-package com.example.fruitmarket.fruit;
-
-import com.example.fruitmarket.IProduct;
-import com.example.fruitmarket.PriceMetric;
+package com.example.fruitmarket.models;
 
 import java.util.ArrayList;
 

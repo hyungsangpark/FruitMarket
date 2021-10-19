@@ -1,4 +1,4 @@
-package com.example.fruitmarket.adaptors;
+package com.example.fruitmarket.adapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -17,7 +17,7 @@ import com.google.android.material.chip.Chip;
 
 import java.util.List;
 
-public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAdaptor.ViewHolder> {
+public class CategoryFilterAdapter extends RecyclerView.Adapter<CategoryFilterAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -73,13 +73,13 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
     private final List<String> mCategories;
     private Context mContext;
 
-    public CategoryFilterAdaptor(List<String> categories) {
+    public CategoryFilterAdapter(List<String> categories) {
         mCategories = categories;
     }
 
     @NonNull
     @Override
-    public CategoryFilterAdaptor.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategoryFilterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 

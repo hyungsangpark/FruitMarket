@@ -1,26 +1,20 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
+import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.ListAdapter;
-import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.models.Fruit;
 import com.example.fruitmarket.data.DataProvider;
-import com.example.fruitmarket.fruit.Fruit;
 
 import java.util.ArrayList;
 

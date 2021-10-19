@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
 

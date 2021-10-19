@@ -1,11 +1,11 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.data;
 
-import com.example.fruitmarket.fruit.Apple;
-import com.example.fruitmarket.fruit.Blueberry;
-import com.example.fruitmarket.fruit.Feijoa;
-import com.example.fruitmarket.fruit.Fruit;
-import com.example.fruitmarket.fruit.Kiwifruit;
-import com.example.fruitmarket.fruit.Orange;
+import com.example.fruitmarket.models.Apple;
+import com.example.fruitmarket.models.Blueberry;
+import com.example.fruitmarket.models.Feijoa;
+import com.example.fruitmarket.models.Fruit;
+import com.example.fruitmarket.models.Kiwifruit;
+import com.example.fruitmarket.models.Orange;
 import java.util.List;
 
 public class SearchDataProvider {

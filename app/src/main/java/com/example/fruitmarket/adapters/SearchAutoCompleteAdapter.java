@@ -1,4 +1,4 @@
-package com.example.fruitmarket.adaptors;
+package com.example.fruitmarket.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -26,7 +26,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterable {
+public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterable {
 
     private static final int MAX_NUM_SUGGESTIONS = 10;
     private static final int MAX_NUM_HISTORY_SUGGESTIONS = 3;
@@ -39,7 +39,7 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
     private List<String> mSearchHistory;
     private Context mContext;
 
-    public SearchAutoCompleteAdaptor(@NonNull Context context, int resource, @NonNull List<String> objects) {
+    public SearchAutoCompleteAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
         mContext = context;
         mLayoutID = resource;

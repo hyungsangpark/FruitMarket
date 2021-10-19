@@ -1,4 +1,4 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.example.fruitmarket.R;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
