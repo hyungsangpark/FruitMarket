@@ -2,9 +2,13 @@ package com.example.fruitmarket.fruit;
 
 public class Blueberry extends Fruit{
 
-    private Boolean ripe;
-    private String colour;
-    private Boolean outOfSeason;
+    Boolean ripe;
+    String colour;
+    Boolean outOfSeason;
+
+    public Blueberry() {
+
+    }
 
     public Boolean getRipe() {
         return ripe;
