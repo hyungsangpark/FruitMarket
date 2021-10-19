@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50290211886",
+    "project_id": "fruitmarket-ad6ee",
+    "storage_bucket": "fruitmarket-ad6ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50290211886:android:1cb91c9006c50f01be33bf",
+        "android_client_info": {
+          "package_name": "com.team7.fruitmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50290211886-b5ie9d8ahdnjtf54f82p7bkcofif3nmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaZFmUIaFsedwF6FZ91pYNSonuviWliIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50290211886-b5ie9d8ahdnjtf54f82p7bkcofif3nmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
