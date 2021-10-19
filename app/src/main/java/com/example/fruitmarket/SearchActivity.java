@@ -122,6 +122,7 @@ public class SearchActivity extends AppCompatActivity {
         rvButtons.addItemDecoration(new CategoryFilterAdaptor.MarginItemDecoration(
                 (int) getResources().getDimension(R.dimen.category_filter_button_horizontal_margin),
                 (int) getResources().getDimension(R.dimen.category_filter_button_vertical_margin)));
+
         LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvButtons.setLayoutManager(lm);
 

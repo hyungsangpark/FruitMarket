@@ -47,15 +47,14 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
             }
 
             // TODO: Included Selected Category as the filter.
-
             Toast.makeText(mContext, clickedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public class MarginItemDecoration extends RecyclerView.ItemDecoration {
+    public static class MarginItemDecoration extends RecyclerView.ItemDecoration {
 
-        private int horizontalMargin;
-        private int verticalMargin;
+        private final int horizontalMargin;
+        private final int verticalMargin;
 
         public MarginItemDecoration(int horizontalMargin, int verticalMargin) {
             this.horizontalMargin = horizontalMargin;
@@ -71,7 +70,7 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
         }
     }
 
-    private List<String> mCategories;
+    private final List<String> mCategories;
     private Context mContext;
 
     public CategoryFilterAdaptor(List<String> categories) {
@@ -86,8 +85,7 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
 
         View categoryFilterView = inflater.inflate(R.layout.item_category_filter, parent, false);
 
-        ViewHolder holder = new ViewHolder(categoryFilterView);
-        return holder;
+        return new ViewHolder(categoryFilterView);
     }
 
     @Override
