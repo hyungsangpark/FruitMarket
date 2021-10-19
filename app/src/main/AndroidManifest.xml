@@ -15,7 +15,8 @@
 
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/menu" />
+            android:resource="@menu/main_menu"
+            />
 
         <activity
             android:name=".activities.SearchActivity"
