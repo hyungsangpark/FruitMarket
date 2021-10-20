@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.models.IProduct;
 
@@ -39,7 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
     ViewPagerAdapter mViewPagerAdapter;
 
     IProduct fruit;
-    FruitDetailsAdaper adapter;
+    FruitDetailsAdapter adapter;
     RecyclerView fruitDetails;
 
     @Override
@@ -71,7 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
         // Initialize contacts
         fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
         // Create adapter passing in the sample user data
-        adapter = new FruitDetailsAdapter(fruit);
+        adapter = new FruitDetailsAdapter(fruit.getAttributeNames(), fruit.getAttributeValues());
         // Attach the adapter to the recyclerview to populate items
         fruitDetails.setAdapter(adapter);
 

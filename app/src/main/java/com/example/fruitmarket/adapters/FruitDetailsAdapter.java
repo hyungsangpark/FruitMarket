@@ -16,43 +16,47 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.recyclerviewdemo.models.Contact;
 
 import com.example.fruitmarket.models.Fruit;
+import com.example.fruitmarket.models.IProduct;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapter.ViewHolder> {
 
-//    // To make your view item clickable ensure that the view holder class implements View.OnClickListener and it has the onClick(View v) method.
-//    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//
-//        // Declare objects of all the views to be manipulated in item_contact.xml
-//        public TextView nameTextView;
-//        public RadioButton radioButtonOnlineStatus;
-//
-//        public ViewHolder(View v) {
-//            super(v);
-//            v.setOnClickListener(this);
-//            // Initialize the view objects
-//            nameTextView = v.findViewById(R.id.contact_name);
-//            radioButtonOnlineStatus = v.findViewById((R.id.radio_button_online_status));
-//        }
-//
+    // To make your view item clickable ensure that the view holder class implements View.OnClickListener and it has the onClick(View v) method.
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        // Declare objects of all the views to be manipulated in item_contact.xml
+        public TextView leftTextView;
+        public TextView rightTextView;
+
+        public ViewHolder(View v) {
+            super(v);
+            // Initialize the view objects
+            leftTextView = v.findViewById(R.id.text_left);
+            rightTextView = v.findViewById((R.id.text_right));
+        }
+
 //        @Override
 //        public void onClick(View v) {
 //            // What to do when the view item is clicked
 //            Contact clickedContact = mContacts.get(getAdapterPosition());
 //            Toast.makeText(mContext, clickedContact.getName() + " is clicked in position " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 //        }
-//    }
+    }
 
     // Declare the data collection object that holds the data to be populated in the RecyclerView
-    private Fruit mFruit;
+    private List<String> mAttributeNames;
+    private List<String> mAttributeValues;
     private Context mContext;
 
     // Pass in the contact array object into the constructor
-    public FruitDetailsAdapter(IProduct fruit) {
+    public FruitDetailsAdapter(List<String> attributeNamesames,
+                               List<String> attributeValues) {
         // The contacts object is sent via the activity that creates this adaptor
-        mFruit = (Fruit)fruit;
+        mAttributeNames = attributeNamesames;
+        mAttributeValues = attributeValues;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -73,22 +77,16 @@ public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapte
     // This method populates the data from mContacts to the view items
     @Override
     public void onBindViewHolder(@NonNull FruitDetailsAdapter.ViewHolder holder, int position) {
-        for (Field field : mFruit.getClass().getDeclaredFields()) {
-            field.setAccessible(true); // You might want to set modifier to public first.
-            Object value = field.get(someObject);
-            if (value != null) {
-                System.out.println(field.getName() + "=" + value);
-            }
-        }
+        // Get the data object for the item view in this position
+        String thisAttributeName = mAttributeNames.get(position);
+        String thisAttributeValue = mAttributeValues.get(position);
 
-        holder.nameTextView.setText(thisContact.getName());
-        holder.radioButtonOnlineStatus.setChecked(thisContact.isOnline());
+        holder.leftTextView.setText(thisAttributeName);
+        holder.rightTextView.setText(thisAttributeValue);
     }
 
     @Override
     public int getItemCount() {
-        return mContacts.size();
+        return mAttributeNames.size();
     }
-
-
 }
