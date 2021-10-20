@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.fruitmarket.R;
+
 import java.util.Objects;
 
 public class ViewPagerAdapter extends PagerAdapter {

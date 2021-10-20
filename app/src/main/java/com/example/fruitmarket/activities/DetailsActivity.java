@@ -35,7 +35,7 @@ public class DetailsActivity extends AppCompatActivity {
     ViewPager mViewPager;
 
     // images array
-    int[] images = {R.drawable.a1, R.drawable.a2, R.drawable.a3};
+    int[] images = {R.drawable.gala_apple_rosie_1, R.drawable.gala_apple_rosie_2, R.drawable.gala_apple_rosie_3};
 
     // Creating Object of ViewPagerAdapter
     ViewPagerAdapter mViewPagerAdapter;

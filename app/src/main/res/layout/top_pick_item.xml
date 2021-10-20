@@ -23,7 +23,7 @@
             android:layout_marginBottom="6dp"
             android:contentDescription="TODO"
             android:scaleType="centerCrop"
-            android:src="@drawable/feijoasCatImg" />
+            android:src="@drawable/feijoas_cat_img" />
 
         <TextView
             android:id="@+id/top_pick_item_name"
