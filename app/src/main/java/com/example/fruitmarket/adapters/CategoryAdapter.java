@@ -50,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             //Starts the new activity with the intent and sets sliding transitions
             activty.startActivity(intent);
-            activty.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+            activty.overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_left);
 
 
         }
@@ -78,7 +78,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //Setting the text and image for the current category
         Category thisCategory = categories.get(position);
         holder.categoryTextView.setText(thisCategory.getCategoryDisplayName());
-        int imageID = context.getResources().getIdentifier(thisCategory.getCategoryImageName(), "drawable", context.getPackageName());
+        int imageID = thisCategory.getCategoryImageName();
         holder.categoryImageView.setImageResource(imageID);
     }
 
