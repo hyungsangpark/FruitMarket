@@ -13,10 +13,14 @@ import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.TopPicksAdapter;
 import com.example.fruitmarket.data.DataProvider;
+import com.example.fruitmarket.data.SearchDataProvider;
 import com.example.fruitmarket.models.Category;
 import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     TopPicksAdapter topPicksAdapter;
 
     RecyclerView categoriesRecyclerView;
-    ArrayList<Category> categories;
+    List<Category> categories;
     LinearLayoutManager categoriesLayoutManager;
     CategoryAdapter categoryAdapter;
 
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         categoriesRecyclerView = (RecyclerView) findViewById(R.id.categories);
 
         topPicks = dataProvider.getMostPopular();
-        categories = dataProvider.getCategoriesList();
+        categories = dataProvider.getFruitCategories();
 
         topPicksAdapter = new TopPicksAdapter(topPicks);
         categoryAdapter = new CategoryAdapter(categories);
