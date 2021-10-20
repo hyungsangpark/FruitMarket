@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,44 @@ public class DataProvider {
 
     }
 
-    public ArrayList<Fruit> getMostPopular() {
-        ArrayList<Fruit> sortedByPopularity = new ArrayList<Fruit>();
-        return sortedByPopularity;
+    public List<Fruit> getMostPopular() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
+        fruitCategoryClasses.put("apples", new Apple());
+        fruitCategoryClasses.put("blueberries", new Blueberry());
+        fruitCategoryClasses.put("feijoas", new Feijoa());
+        fruitCategoryClasses.put("kiwifruits", new Kiwifruit());
+        fruitCategoryClasses.put("oranges", new Orange());
+
+        Map<String, Fruit> fruitsMap = new HashMap<>();
+        fruitsMap.put("", new Fruit() {
+            @Override
+            public List<String> getAttributeNames() {
+                return null;
+            }
+
+            @Override
+            public List<String> getAttributeValues() {
+                return null;
+            }
+        });
+
+        for (String collection : fruitsMap.keySet()) {
+            db.collection(collection).get().addOnCompleteListener(
+                    (@NonNull Task<QuerySnapshot> task) -> {
+                if (task.isSuccessful()) {
+                    for (Fruit fruit : task.getResult().toObjects(
+                            fruitCategoryClasses.get(collection).getClass())) {
+                        fruitsMap.put(fruit.getCategory(), fruit);
+                    }
+                }
+            });
+        }
+
+        List<Fruit> allFruits = (List<Fruit>)fruitsMap.values();
+        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
+        return allFruits.subList(0, 10); // Return top 10 popular fruits.
     }
 
 

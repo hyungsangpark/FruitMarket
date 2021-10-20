@@ -31,7 +31,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
         private TextView topPickProducerTextView;
         private ImageView topPickImageView;
 
-        public ViewHolder(View view ){
+        public ViewHolder(View view){
             super(view);
             view.setOnClickListener(this); //setting a click listener for the top pick part
             //Setting the views
@@ -57,7 +57,8 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         context = viewGroup.getContext(); //setting the context
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.top_pick_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.top_pick_item,
+                                        viewGroup, false);
         return new ViewHolder(view);
     }
 

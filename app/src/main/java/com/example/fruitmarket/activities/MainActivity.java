@@ -25,7 +25,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView topPicksRecyclerView;
-    ArrayList<Fruit> topPicks;
+    List<Fruit> topPicks;
     LinearLayoutManager topPicksLayoutManager;
     TopPicksAdapter topPicksAdapter;
 
