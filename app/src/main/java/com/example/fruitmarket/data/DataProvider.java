@@ -163,11 +163,11 @@ public class DataProvider {
 
     public List<Category> getFruitCategories() {
         List<Category> categoryList = new ArrayList<>();
-        categoryList.add(new Category("Apples"));
-        categoryList.add(new Category("Blueberries"));
-        categoryList.add(new Category("Feijoas"));
-        categoryList.add(new Category("Kiwifruits"));
-        categoryList.add(new Category("Oranges"));
+        categoryList.add(new Category("apples"));
+        categoryList.add(new Category("blueberries"));
+        categoryList.add(new Category("feijoas"));
+        categoryList.add(new Category("kiwifruits"));
+        categoryList.add(new Category("oranges"));
         return categoryList;
     }
 
