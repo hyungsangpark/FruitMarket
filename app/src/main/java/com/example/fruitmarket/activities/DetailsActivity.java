@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
+import com.example.fruitmarket.models.IProduct;
 
 import java.util.ArrayList;
 
@@ -37,8 +38,8 @@ public class DetailsActivity extends AppCompatActivity {
     // Creating Object of ViewPagerAdapter
     ViewPagerAdapter mViewPagerAdapter;
 
-//    ArrayList<Contact> contacts;
-//    ContactAdaptor adapter;
+    IProduct fruit;
+    FruitDetailsAdaper adapter;
     RecyclerView fruitDetails;
 
     @Override
@@ -68,11 +69,11 @@ public class DetailsActivity extends AppCompatActivity {
         fruitDetails = (RecyclerView) findViewById(R.id.fruitDetails);
 
         // Initialize contacts
-        contacts = DataProvider.generateData();
+        fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
         // Create adapter passing in the sample user data
-        adapter = new ContactAdaptor(contacts);
+        adapter = new FruitDetailsAdapter(fruit);
         // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
+        fruitDetails.setAdapter(adapter);
 
 //        // Create a LayoutManager
 //        LinearLayoutManager lm = new LinearLayoutManager(this);

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.models.Fruit;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapter.ViewHolder> {
@@ -49,9 +50,9 @@ public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapte
     private Context mContext;
 
     // Pass in the contact array object into the constructor
-    public FruitDetailsAdapter(Fruit fruit) {
+    public FruitDetailsAdapter(IProduct fruit) {
         // The contacts object is sent via the activity that creates this adaptor
-        mFruit = fruit;
+        mFruit = (Fruit)fruit;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -72,8 +73,13 @@ public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapte
     // This method populates the data from mContacts to the view items
     @Override
     public void onBindViewHolder(@NonNull FruitDetailsAdapter.ViewHolder holder, int position) {
-        // Get the data object for the item view in this position
-        Contact thisContact = mContacts.get(position);
+        for (Field field : mFruit.getClass().getDeclaredFields()) {
+            field.setAccessible(true); // You might want to set modifier to public first.
+            Object value = field.get(someObject);
+            if (value != null) {
+                System.out.println(field.getName() + "=" + value);
+            }
+        }
 
         holder.nameTextView.setText(thisContact.getName());
         holder.radioButtonOnlineStatus.setChecked(thisContact.isOnline());
