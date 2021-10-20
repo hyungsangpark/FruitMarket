@@ -45,6 +45,17 @@ public class Feijoa extends Fruit {
         this.seedToPulpRatio = seedToPulpRatio;
     }
 
+    public List<String> getAttributeNames() {
+        List<String> names = new ArrayList<>();
+        names.addAll(getFruitAttributeNames());
+        names.add("Ripe:");
+        names.add("Skin colour:");
+        names.add("Out of season:");
+        names.add("Seed/pulp ratio:");
+
+        return names;
+    }
+
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());

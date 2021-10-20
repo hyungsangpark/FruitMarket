@@ -55,6 +55,17 @@ public class Kiwifruit extends Fruit {
         this.outOfSeason = outOfSeason;
     }
 
+    public List<String> getAttributeNames() {
+        List<String> names = new ArrayList<>();
+        names.addAll(getFruitAttributeNames());
+        names.add("Ripe:");
+        names.add("Seed/pulp ratio:");
+        names.add("Contains actinidain:");
+        names.add("Out of season:");
+
+        return names;
+    }
+
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());

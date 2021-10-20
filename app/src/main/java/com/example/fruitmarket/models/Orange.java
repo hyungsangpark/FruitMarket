@@ -55,6 +55,18 @@ public class Orange extends Fruit {
         this.sweetened = sweetened;
     }
 
+    public List<String> getAttributeNames() {
+        List<String> names = new ArrayList<>();
+        names.addAll(getFruitAttributeNames());
+        names.add("Produce season:");
+        names.add("Usage:");
+        names.add("Grade:");
+        names.add("Seedless:");
+        names.add("Sweetened:");
+
+        return names;
+    }
+
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());

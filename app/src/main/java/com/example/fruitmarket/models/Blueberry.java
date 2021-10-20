@@ -37,6 +37,16 @@ public class Blueberry extends Fruit {
         this.outOfSeason = outOfSeason;
     }
 
+    public List<String> getAttributeNames() {
+        List<String> names = new ArrayList<>();
+        names.addAll(getFruitAttributeNames());
+        names.add("Ripe:");
+        names.add("Colour:");
+        names.add("Out of season:");
+
+        return names;
+    }
+
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());

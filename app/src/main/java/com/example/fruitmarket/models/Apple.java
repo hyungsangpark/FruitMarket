@@ -55,6 +55,18 @@ public class Apple extends Fruit {
         this.size = size;
     }
 
+    public List<String> getAttributeNames() {
+        List<String> names = new ArrayList<>();
+        names.addAll(getFruitAttributeNames());
+        names.add("Produce season:");
+        names.add("Usage:");
+        names.add("Grade:");
+        names.add("Skin colour:");
+        names.add("Size:");
+
+        return names;
+    }
+
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());
