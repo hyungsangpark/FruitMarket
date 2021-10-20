@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fruitmarket.R;
 import com.example.fruitmarket.activities.ListActivity;
 import com.example.fruitmarket.models.Category;
 
@@ -66,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //Links and inflates the views in category_item.xml with the data
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View categoryView = inflater.inflate(R.layout.category_item, parent, false);
+        View categoryView = inflater.inflate(R.layout.category, parent, false);
         ViewHolder holder = new ViewHolder(categoryView);
         return holder;
 
