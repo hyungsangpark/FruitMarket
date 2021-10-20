@@ -44,10 +44,10 @@ class ViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         // inflating the item.xml
-        View itemView = mLayoutInflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+        View itemView = mLayoutInflater.inflate(R.layout.activity_details_images_slider, container, false);
 
         // referencing the image view from the item.xml file
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewMain);
+        ImageView imageView = (ImageView) itemView.findViewById(R.id.slidingImages);
 
         // setting the image in the imageView
         imageView.setImageResource(images[position]);
