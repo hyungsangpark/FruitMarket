@@ -36,6 +36,11 @@ public class DataProvider {
         Map<Long, Fruit> fruitsMap = new HashMap<>();
         fruitsMap.put(0L, new Fruit() {
             @Override
+            public List<String> getAttributeNames() {
+                return null;
+            }
+
+            @Override
             public List<String> getAttributeValues() {
                 return null;
             }
@@ -73,6 +78,11 @@ public class DataProvider {
 
         Map<String, Fruit> fruitsMap = new HashMap<>();
         fruitsMap.put("", new Fruit() {
+            @Override
+            public List<String> getAttributeNames() {
+                return null;
+            }
+
             @Override
             public List<String> getAttributeValues() {
                 return null;
