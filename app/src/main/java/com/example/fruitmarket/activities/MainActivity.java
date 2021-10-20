@@ -1,5 +1,6 @@
 package com.example.fruitmarket.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,9 +44,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("  " + "FruitMarket");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.fruitmarket_logo);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setLogo(R.mipmap.fruitmarket_logo);
+            actionBar.setDisplayUseLogoEnabled(true);
+        }
 
         topPicksRecyclerView = (RecyclerView) findViewById(R.id.top_picks);
         categoriesRecyclerView = (RecyclerView) findViewById(R.id.categories);

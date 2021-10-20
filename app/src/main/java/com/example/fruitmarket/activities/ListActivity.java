@@ -1,5 +1,6 @@
 package com.example.fruitmarket.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,9 +45,12 @@ public class ListActivity extends AppCompatActivity {
         if (searchTermDataPassedIn == null){
             //Setting actionbar logo and name to selected category
             setTitle("  " + categoryDataPassedIn);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setLogo(R.mipmap.fruitmarket_logo);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            ActionBar actionBar = this.getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setLogo(R.mipmap.fruitmarket_logo);
+                actionBar.setDisplayUseLogoEnabled(true);
+            }
 
             //Retrieving list of fruit of the selected category from dataProvider
             fruitsList = dataProvider.getFruitsGivenCategory(new Category(categoryDataPassedIn));
