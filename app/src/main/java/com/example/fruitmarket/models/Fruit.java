@@ -148,4 +148,15 @@ public abstract class Fruit implements IProduct {
 
         return values;
     }
+
+    // Possibly for debug purposes?
+    @Override
+    public String toString() {
+        return "Fruit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", producer='" + producer + '\'' +
+                ", popularity=" + popularity +
+                '}';
+    }
 }
