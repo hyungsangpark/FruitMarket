@@ -50,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
             //Starts the new activity with the intent and sets sliding transitions
             activty.startActivity(intent);
-            activty.overridePendingTransition(R.anim.slide_to_right, R.anim.slide_to_left);
+            activty.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
 
         }
