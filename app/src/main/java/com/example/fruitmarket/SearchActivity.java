@@ -40,10 +40,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -116,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         List<String> filteredCategories = new ArrayList<>();
-        Map<String, List<String>> fruitsData = new HashMap<>();
+        Map<String, Set<String>> fruitsData = new HashMap<>();
 
         // Category filter array
         rvButtons = findViewById(R.id.category_filter_recycler_view);
@@ -191,11 +193,11 @@ public class SearchActivity extends AppCompatActivity {
         fetchFruitsData(fruitsData);
     }
 
-    private void fetchFruitsData(Map<String, List<String>> fruitsMap) {
+    private void fetchFruitsData(Map<String, Set<String>> fruitsMap) {
         // TODO: Extract these hard-coded values into DataProviders.
         String[] collections = {"apples", "blueberries", "feijoas", "kiwifruits", "oranges"};
         for (String collection : collections) {
-            fruitsMap.put(collection, new ArrayList<>());
+            fruitsMap.put(collection, new HashSet<>());
         }
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
@@ -216,10 +218,10 @@ public class SearchActivity extends AppCompatActivity {
                         fruitsMap.get(collection).add(fruit.getProducer());
                         fruitsMap.get(collection).add(fruit.getVariety());
 
-                        Log.i("Parsing " + collection, fruit.getName() + " loaded.");
+                        Log.i("Parsing_" + collection, fruit.getName() + " loaded.");
                     }
                     if (fruitsMap.get(collection).size() > 0) {
-                        Log.i("Getting fruits", "Success");
+                        Log.i("Parsing_" + collection, "Total of " + fruitsMap.get(collection).size() + " Keywords Successfully Fetched");
                         // Once the task is successful add the data to the search items of the auto complete adapter.
                         searchAutoCompleteAdaptor.addSearchItems(fruitsMap.get(collection));
                     } else {
