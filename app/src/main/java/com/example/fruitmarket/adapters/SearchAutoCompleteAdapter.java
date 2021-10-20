@@ -1,17 +1,12 @@
 package com.example.fruitmarket.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -22,7 +17,6 @@ import androidx.annotation.Nullable;
 
 import com.example.fruitmarket.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +38,8 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
         mContext = context;
         mLayoutID = resource;
         searchKeyword = "";
-        mSearchItemsSuggested = objects;
         mSearchItems = new ArrayList<>(objects);
-//        mSearchItemsSuggested.removeAll(mSearchItems);
+        mSearchItemsSuggested = new ArrayList<>();
         mSearchHistory = new ArrayList<>();
         // TODO: Two lines below are for debug purposes.
         mSearchHistory.add("Ho Seok's Orchard");
@@ -95,8 +88,23 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
 
     @Override
     public int getCount() {
-        return Math.min(mSearchItemsSuggested.size(), MAX_NUM_SUGGESTIONS);
-//        return mSearchItemsSuggested.size();
+        int numSuggestedItems;
+        if (mSearchItemsSuggested == null) {
+            numSuggestedItems = 0;
+        } else {
+            numSuggestedItems = mSearchItemsSuggested.size();
+        }
+        return Math.min(numSuggestedItems, MAX_NUM_SUGGESTIONS);
+    }
+
+    public void updateSearchItems(List<String> newItems) {
+        mSearchItems = newItems;
+        getFilter().filter(searchKeyword);
+    }
+
+    public void addSearchItems(List<String> newItems) {
+        mSearchItems.addAll(newItems);
+        getFilter().filter(searchKeyword);
     }
 
     @Override
@@ -114,8 +122,18 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
                 } else {
                     searchKeyword = charSequence.toString().toLowerCase();
                     List<String> result = new ArrayList<>();
+                    String previousItem = "";
                     for (String searchItem : mSearchItems) {
-                        if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
+                        try {
+                            if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
+                        } catch (NullPointerException e) {
+                            Log.e("NullPointerException", "Previous item: " + previousItem + ". Maybe check firebase to see whether it's missing this field?");
+                        }
+                        previousItem = searchItem;
+                    }
+
+                    if (result.isEmpty()) {
+                        result.add("No search results to: " + charSequence.toString() + " was found.");
                     }
 
                     // Assign the data to the FilterResults
