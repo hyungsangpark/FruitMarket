@@ -24,6 +24,7 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
 
     private static final int MAX_NUM_SUGGESTIONS = 10;
     private static final int MAX_NUM_HISTORY_SUGGESTIONS = 3;
+    public static final String NO_RESULT_DESCRIPTION = "No results with: ";
 
     // mLayoutId refers to the ListView item xml
     private final int mLayoutID;
@@ -73,14 +74,18 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
         if (matchingTextStartIndex == -1) {
             searchSuggestionTextView.setText(currentSearchSuggestion);
         } else {
-            int matchingTextEndIndex = matchingTextStartIndex + searchKeyword.length();
+            if (!currentSearchSuggestion.startsWith(NO_RESULT_DESCRIPTION)) {
+                int matchingTextEndIndex = matchingTextStartIndex + searchKeyword.length();
 
-            String text = currentSearchSuggestion.substring(0, matchingTextStartIndex) +
-                    "<font face='sans-serif-black'>" +
-                    currentSearchSuggestion.substring(matchingTextStartIndex, matchingTextEndIndex) +
-                    "</font>" +
-                    currentSearchSuggestion.substring(matchingTextEndIndex);
-            searchSuggestionTextView.setText(Html.fromHtml(text));
+                String text = currentSearchSuggestion.substring(0, matchingTextStartIndex) +
+                        "<font face='sans-serif-black'>" +
+                        currentSearchSuggestion.substring(matchingTextStartIndex, matchingTextEndIndex) +
+                        "</font>" +
+                        currentSearchSuggestion.substring(matchingTextEndIndex);
+                searchSuggestionTextView.setText(Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                searchSuggestionTextView.setText(currentSearchSuggestion);
+            }
         }
 
         return currentSearchSuggestionItem;
@@ -133,7 +138,7 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
                     }
 
                     if (result.isEmpty()) {
-                        result.add("No search results to: " + charSequence.toString() + " was found.");
+                        result.add(NO_RESULT_DESCRIPTION + charSequence.toString());
                     }
 
                     // Assign the data to the FilterResults
