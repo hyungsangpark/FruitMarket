@@ -60,6 +60,8 @@ public class SearchActivity extends AppCompatActivity {
     private CategoryFilterAdapter categoryFilterButtonsAdapter;
     private ListView searchSuggestions;
     private SearchAutoCompleteAdapter searchAutoCompleteAdaptor;
+    public static final String SEARCH_TERM_KEY = "SEARCH_TERM";
+    public static final String FILTER_CATEGORIES_KEY = "FILTER_CATEGORIES_KEY";
 
     // Perhaps a class like this can be used for each category filter item.
     public static class FilterCategory {

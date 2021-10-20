@@ -1,32 +1,51 @@
 package com.example.fruitmarket.models;
 
+import com.example.fruitmarket.R;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Category {
     String categoryName;
-    String categoryImageName;
+    Integer categoryImageName;
     String categoryDisplayName;
+    Map<String, Integer> categoryImages = new HashMap<>();
 
     public Category(String name){
         categoryName = name;
-        categoryImageName = name;
-        if(name.equals("apples")){
-            categoryDisplayName = "Apples";
-        } else if (name.equals("blueberries")){
-            categoryDisplayName= "Blueberries";
-        } else if (name.equals("feijoas")){
-            categoryDisplayName = "Feijoas";
-        } else if (name.equals("kiwifruits")){
-            categoryDisplayName = "Kiwifruits";
-        } else if(name.equals("oranges")){
-            categoryDisplayName = "Oranges";
-        } else {
+        categoryImages.put("Apples", R.drawable.appleCatImg);
+        categoryImages.put("Blueberries", R.drawable.blueberriesCatImg);
+        categoryImages.put("Feijoas", R.drawable.feijoasCatImg);
+        categoryImages.put("Kiwifruit", R.drawable.kiwifruitCatImg);
+        categoryImages.put("Oranges", R.drawable.orangesCatImg);
+
+        switch (name) {
+            case "apples":
+                categoryDisplayName = "Apples";
+                break;
+            case "blueberries":
+                categoryDisplayName = "Blueberries";
+                break;
+            case "feijoas":
+                categoryDisplayName = "Feijoas";
+                break;
+            case "kiwifruits":
+                categoryDisplayName = "Kiwifruits";
+                break;
+            default:
+                categoryDisplayName = "Oranges";
+                break;
         }
+
+        categoryImageName = categoryImages.get(getCategoryDisplayName());
+
     }
 
     public String getCategoryName(){
         return categoryName;
     }
 
-    public String getCategoryImageName() {
+    public Integer getCategoryImageName() {
         return categoryImageName;
     }
 
