@@ -1,4 +1,4 @@
-package com.example.fruitmarket.adaptors;
+package com.example.fruitmarket.adapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,20 +16,23 @@ import com.example.fruitmarket.R;
 import com.google.android.material.chip.Chip;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAdaptor.ViewHolder> {
+public class CategoryFilterAdapter extends RecyclerView.Adapter<CategoryFilterAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public Chip itemCategoryFilterButton;
+        public Consumer<String> filterButtonOnClick;
         private boolean isSelected;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, Consumer<String> filterButtonOnClick) {
             super(itemView);
             itemView.setOnClickListener(this);
             // Initialize the view objects.
-            itemCategoryFilterButton = itemView.findViewById(R.id.item_category_filter_button);
-            isSelected = false;
+            this.itemCategoryFilterButton = itemView.findViewById(R.id.item_category_filter_button);
+            this.filterButtonOnClick = filterButtonOnClick;
+            this.isSelected = false;
         }
 
         @Override
@@ -45,6 +48,9 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
                 itemCategoryFilterButton.setChipStrokeWidthResource(R.dimen.category_filter_button_stroke_width);
                 isSelected = false;
             }
+
+            // Run the on click event.
+            filterButtonOnClick.accept(clickedCategory);
 
             // TODO: Included Selected Category as the filter.
             Toast.makeText(mContext, clickedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
@@ -71,21 +77,23 @@ public class CategoryFilterAdaptor extends RecyclerView.Adapter<CategoryFilterAd
     }
 
     private final List<String> mCategories;
+    private final Consumer<String> filterButtonOnClick;
     private Context mContext;
 
-    public CategoryFilterAdaptor(List<String> categories) {
-        mCategories = categories;
+    public CategoryFilterAdapter(List<String> categories, Consumer<String> filterButtonOnClick) {
+        this.mCategories = categories;
+        this.filterButtonOnClick = filterButtonOnClick;
     }
 
     @NonNull
     @Override
-    public CategoryFilterAdaptor.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CategoryFilterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         View categoryFilterView = inflater.inflate(R.layout.item_category_filter, parent, false);
 
-        return new ViewHolder(categoryFilterView);
+        return new ViewHolder(categoryFilterView, filterButtonOnClick);
     }
 
     @Override

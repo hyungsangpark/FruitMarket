@@ -1,17 +1,12 @@
-package com.example.fruitmarket.adaptors;
+package com.example.fruitmarket.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -22,11 +17,10 @@ import androidx.annotation.Nullable;
 
 import com.example.fruitmarket.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterable {
+public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterable {
 
     private static final int MAX_NUM_SUGGESTIONS = 10;
     private static final int MAX_NUM_HISTORY_SUGGESTIONS = 3;
@@ -39,13 +33,14 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
     private List<String> mSearchHistory;
     private Context mContext;
 
-    public SearchAutoCompleteAdaptor(@NonNull Context context, int resource, @NonNull List<String> objects) {
+    public SearchAutoCompleteAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
         mContext = context;
         mLayoutID = resource;
         searchKeyword = "";
-        mSearchItemsSuggested = objects;
         mSearchItems = new ArrayList<>(objects);
+//        mSearchItemsSuggested = objects;
+        mSearchItemsSuggested = new ArrayList<>();
 //        mSearchItemsSuggested.removeAll(mSearchItems);
         mSearchHistory = new ArrayList<>();
         // TODO: Two lines below are for debug purposes.
@@ -64,7 +59,11 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
                     .inflate(mLayoutID, parent, false);
         }
 
+
         String currentSearchSuggestion = mSearchItemsSuggested.get(position);
+        Log.d("getView", "mSearchItems(" + mSearchItems.size() + "): " + mSearchItems);
+        Log.d("getView", "mSearchItemsSuggested(" + mSearchItemsSuggested.size() + "): " + mSearchItemsSuggested);
+        Log.d("getView", "currentSearchSuggestion: " + currentSearchSuggestion);
 
         // Set image visibility based on whether it is present in the search history.
         ImageView historyIcon = currentSearchSuggestionItem
@@ -95,8 +94,24 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
 
     @Override
     public int getCount() {
-        return Math.min(mSearchItemsSuggested.size(), MAX_NUM_SUGGESTIONS);
+        int numSuggestedItems;
+        if (mSearchItemsSuggested == null) {
+            numSuggestedItems = 0;
+        } else {
+            numSuggestedItems = mSearchItemsSuggested.size();
+        }
+        return Math.min(numSuggestedItems, MAX_NUM_SUGGESTIONS);
 //        return mSearchItemsSuggested.size();
+    }
+
+    public void updateSearchItems(List<String> newItems) {
+        mSearchItems = newItems;
+        getFilter().filter(searchKeyword);
+    }
+
+    public void addSearchItems(List<String> newItems) {
+        mSearchItems.addAll(newItems);
+        getFilter().filter(searchKeyword);
     }
 
     @Override
@@ -114,8 +129,18 @@ public class SearchAutoCompleteAdaptor extends ArrayAdapter implements Filterabl
                 } else {
                     searchKeyword = charSequence.toString().toLowerCase();
                     List<String> result = new ArrayList<>();
+                    String previousItem = "";
                     for (String searchItem : mSearchItems) {
-                        if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
+                        try {
+                            if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
+                        } catch (NullPointerException e) {
+                            Log.d("NullPointerException", "previous item: " + previousItem);
+                        }
+                        previousItem = searchItem;
+                    }
+
+                    if (result.isEmpty()) {
+                        result.add("No search results to: " + charSequence.toString() + " was found.");
                     }
 
                     // Assign the data to the FilterResults
