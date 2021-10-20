@@ -13,11 +13,11 @@ public class Category {
 
     public Category(String name){
         categoryName = name;
-        categoryImages.put("Apples", R.drawable.appleCatImg);
-        categoryImages.put("Blueberries", R.drawable.blueberriesCatImg);
-        categoryImages.put("Feijoas", R.drawable.feijoasCatImg);
-        categoryImages.put("Kiwifruit", R.drawable.kiwifruitCatImg);
-        categoryImages.put("Oranges", R.drawable.orangesCatImg);
+        categoryImages.put("Apples", R.drawable.apple_cat_img);
+        categoryImages.put("Blueberries", R.drawable.blueberries_cat_img);
+        categoryImages.put("Feijoas", R.drawable.feijoas_cat_img);
+        categoryImages.put("Kiwifruit", R.drawable.kiwifruit_cat_img);
+        categoryImages.put("Oranges", R.drawable.oranges_cat_img);
 
         switch (name) {
             case "apples":
