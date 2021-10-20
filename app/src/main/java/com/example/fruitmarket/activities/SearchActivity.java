@@ -1,5 +1,7 @@
 package com.example.fruitmarket.activities;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,9 +20,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fruitmarket.R;
@@ -39,10 +43,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -115,13 +121,14 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         List<String> filteredCategories = new ArrayList<>();
-        Map<String, List<String>> fruitsData = new HashMap<>();
+        Map<String, Set<String>> fruitsData = new HashMap<>();
 
         // Category filter array
         rvButtons = findViewById(R.id.category_filter_recycler_view);
         // TODO: Modify this array to import from a legitimate source of these categories.
-        categories = Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges");
+        categories = new ArrayList<>(Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges"));
         categoryFilterButtonsAdapter = new CategoryFilterAdapter(categories, (selectedCategory) -> {
+
             if (filteredCategories.contains(selectedCategory)) {
                 // Excluded Selected Category as the filter.
                 filteredCategories.remove(selectedCategory);
@@ -130,8 +137,12 @@ public class SearchActivity extends AppCompatActivity {
                 filteredCategories.add(selectedCategory);
             }
 
-            // If there is no particular category selected, display every single category.
-            if (filteredCategories.isEmpty()) filteredCategories.addAll(categories);
+            // If there is no particular category selected, include data across every fruit category.
+            boolean noButtonSelected = filteredCategories.isEmpty();
+
+            if (noButtonSelected) {
+                filteredCategories.addAll(categories);
+            }
 
             // Update search items according to
             List<String> searchItems = new ArrayList<>();
@@ -139,6 +150,11 @@ public class SearchActivity extends AppCompatActivity {
                 searchItems.addAll(fruitsData.get(filteredCategory));
             }
             searchAutoCompleteAdaptor.updateSearchItems(searchItems);
+
+            // Remove every category added temporarily.
+            if (noButtonSelected) {
+                filteredCategories.clear();
+            }
         });
         rvButtons.setAdapter(categoryFilterButtonsAdapter);
         rvButtons.addItemDecoration(new CategoryFilterAdapter.MarginItemDecoration(
@@ -153,6 +169,15 @@ public class SearchActivity extends AppCompatActivity {
         searchSuggestions = findViewById(R.id.search_suggestions_list_view);
         searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
         searchSuggestions.setTextFilterEnabled(true);
+        searchSuggestions.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            TextView itemTextView = view.findViewById(R.id.item_search_suggestion_text_view);
+            String keyword = itemTextView.getText().toString();
+
+            if (!keyword.startsWith(SearchAutoCompleteAdapter.NO_RESULT_DESCRIPTION)) {
+                // TODO: to see if it works.
+                Toast.makeText(getBaseContext(), "Selected: " + keyword, Toast.LENGTH_SHORT).show();
+            }
+        });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -171,11 +196,11 @@ public class SearchActivity extends AppCompatActivity {
         fetchFruitsData(fruitsData);
     }
 
-    private void fetchFruitsData(Map<String, List<String>> fruitsMap) {
+    private void fetchFruitsData(Map<String, Set<String>> fruitsMap) {
         // TODO: Extract these hard-coded values into DataProviders.
         String[] collections = {"apples", "blueberries", "feijoas", "kiwifruits", "oranges"};
         for (String collection : collections) {
-            fruitsMap.put(collection, new ArrayList<>());
+            fruitsMap.put(collection, new HashSet<>());
         }
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
@@ -196,10 +221,10 @@ public class SearchActivity extends AppCompatActivity {
                         fruitsMap.get(collection).add(fruit.getProducer());
                         fruitsMap.get(collection).add(fruit.getVariety());
 
-                        Log.i("Parsing " + collection, fruit.getName() + " loaded.");
+                        Log.i("Parsing_" + collection, fruit.getName() + " loaded.");
                     }
                     if (fruitsMap.get(collection).size() > 0) {
-                        Log.i("Getting fruits", "Success");
+                        Log.i("Parsing_" + collection, "Total of " + fruitsMap.get(collection).size() + " Keywords Successfully Fetched");
                         // Once the task is successful add the data to the search items of the auto complete adapter.
                         searchAutoCompleteAdaptor.addSearchItems(fruitsMap.get(collection));
                     } else {
