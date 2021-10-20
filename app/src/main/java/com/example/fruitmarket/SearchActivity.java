@@ -1,5 +1,7 @@
 package com.example.fruitmarket;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
@@ -16,9 +18,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fruitmarket.adapters.CategoryFilterAdapter;
@@ -117,8 +121,9 @@ public class SearchActivity extends AppCompatActivity {
         // Category filter array
         rvButtons = findViewById(R.id.category_filter_recycler_view);
         // TODO: Modify this array to import from a legitimate source of these categories.
-        categories = Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges");
+        categories = new ArrayList<>(Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges"));
         categoryFilterButtonsAdapter = new CategoryFilterAdapter(categories, (selectedCategory) -> {
+
             if (filteredCategories.contains(selectedCategory)) {
                 // Excluded Selected Category as the filter.
                 filteredCategories.remove(selectedCategory);
@@ -127,8 +132,12 @@ public class SearchActivity extends AppCompatActivity {
                 filteredCategories.add(selectedCategory);
             }
 
-            // If there is no particular category selected, display every single category.
-            if (filteredCategories.isEmpty()) filteredCategories.addAll(categories);
+            // If there is no particular category selected, include data across every fruit category.
+            boolean noButtonSelected = filteredCategories.isEmpty();
+
+            if (noButtonSelected) {
+                filteredCategories.addAll(categories);
+            }
 
             // Update search items according to
             List<String> searchItems = new ArrayList<>();
@@ -136,6 +145,11 @@ public class SearchActivity extends AppCompatActivity {
                 searchItems.addAll(fruitsData.get(filteredCategory));
             }
             searchAutoCompleteAdaptor.updateSearchItems(searchItems);
+
+            // Remove every category added temporarily.
+            if (noButtonSelected) {
+                filteredCategories.clear();
+            }
         });
         rvButtons.setAdapter(categoryFilterButtonsAdapter);
         rvButtons.addItemDecoration(new CategoryFilterAdapter.MarginItemDecoration(
@@ -150,6 +164,15 @@ public class SearchActivity extends AppCompatActivity {
         searchSuggestions = findViewById(R.id.search_suggestions_list_view);
         searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
         searchSuggestions.setTextFilterEnabled(true);
+        searchSuggestions.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
+            TextView itemTextView = view.findViewById(R.id.item_search_suggestion_text_view);
+            String keyword = itemTextView.getText().toString();
+
+            if (!keyword.startsWith(SearchAutoCompleteAdapter.NO_RESULT_DESCRIPTION)) {
+                // TODO: to see if it works.
+                Toast.makeText(getBaseContext(), "Selected: " + keyword, Toast.LENGTH_SHORT).show();
+            }
+        });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
