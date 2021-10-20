@@ -113,8 +113,6 @@ public abstract class Fruit implements IProduct {
 
     public List<String> getFruitAttributeNames() {
         List<String> names = new ArrayList<>();
-        names.add("Name:");
-        names.add("Producer:");
         names.add("Variety:");
         names.add("Price:");
         names.add("In stock:");
@@ -126,8 +124,6 @@ public abstract class Fruit implements IProduct {
 
     public List<String> getFruitAttributeValues() {
         List<String> values = new ArrayList<>();
-        values.add(name);
-        values.add(producer);
         values.add(variety);
         values.add("$" + Float.toString(price) + " " + priceMetric.toString());
 

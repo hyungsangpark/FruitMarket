@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.recyclerviewdemo.R;
 //import com.example.recyclerviewdemo.models.Contact;
 
+import com.example.fruitmarket.R;
 import com.example.fruitmarket.models.Fruit;
 import com.example.fruitmarket.models.IProduct;
 

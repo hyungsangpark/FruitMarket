@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.models.IProduct;
+import com.example.fruitmarket.R;
 
 import java.util.ArrayList;
 
@@ -48,14 +49,15 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
+
         vh = new DetailsActivity.ViewHolder();
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
         vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
         vh.descriptionTextView = (TextView) findViewById(R.id.description_text_view);
-        vh.priceTextView = (TextView) findViewById(R.id.price_text_view);
-        vh.availabilityTextView = (TextView) findViewById(R.id.availability_text_view);
 
-        vh.fruitNameTextView.setText("Implement the rest when DataProvider is finished");
+        vh.fruitNameTextView.setText(fruit.getName());
+        vh.producerTextView.setText(fruit.getProducer());
 
         // Initializing the ViewPager Object
         mViewPager = (ViewPager)findViewById(R.id.imagesSlider);
@@ -69,8 +71,6 @@ public class DetailsActivity extends AppCompatActivity {
         // Lookup the recyclerview in activity layout
         fruitDetails = (RecyclerView) findViewById(R.id.fruitDetails);
 
-        // Initialize contacts
-        fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
         // Create adapter passing in the sample user data
         adapter = new FruitDetailsAdapter(fruit.getAttributeNames(), fruit.getAttributeValues());
         // Attach the adapter to the recyclerview to populate items
