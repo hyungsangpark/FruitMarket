@@ -105,6 +105,10 @@ public abstract class Fruit implements IProduct {
         return popularity;
     }
 
+    public void incrementPopularity() {
+        popularity++;
+    }
+
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }

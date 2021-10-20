@@ -1,5 +1,7 @@
 package com.example.fruitmarket.data;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.fruitmarket.models.Apple;
@@ -7,8 +9,11 @@ import com.example.fruitmarket.models.Blueberry;
 import com.example.fruitmarket.models.Category;
 import com.example.fruitmarket.models.Feijoa;
 import com.example.fruitmarket.models.Fruit;
+import com.example.fruitmarket.models.IProduct;
 import com.example.fruitmarket.models.Kiwifruit;
 import com.example.fruitmarket.models.Orange;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -21,7 +26,7 @@ import java.util.Map;
 
 public class DataProvider {
 
-    public DataProvider(){
+    public DataProvider() {
 
     }
 
@@ -51,16 +56,16 @@ public class DataProvider {
         for (String collection : fruitsMap.keySet()) {
             db.collection(collection).get().addOnCompleteListener(
                     (@NonNull Task<QuerySnapshot> task) -> {
-                if (task.isSuccessful()) {
-                    for (Fruit fruit : task.getResult().toObjects(
-                            fruitCategoryClasses.get(collection).getClass())) {
-                        fruitsMap.put(fruit.getCategory(), fruit);
-                    }
-                }
-            });
+                        if (task.isSuccessful()) {
+                            for (Fruit fruit : task.getResult().toObjects(
+                                    fruitCategoryClasses.get(collection).getClass())) {
+                                fruitsMap.put(fruit.getCategory(), fruit);
+                            }
+                        }
+                    });
         }
 
-        List<Fruit> allFruits = (List<Fruit>)fruitsMap.values();
+        List<Fruit> allFruits = (List<Fruit>) fruitsMap.values();
         allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
         return allFruits.subList(0, 10); // Return top 10 popular fruits.
     }
@@ -125,12 +130,12 @@ public class DataProvider {
             }
         });
 
-        if (filterCategories.isEmpty()){
+        if (filterCategories.isEmpty()) {
             for (String collection : fruitsMap.keySet()) {
                 db.collection(collection).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
                     if (task.isSuccessful()) {
                         for (Fruit fruit : task.getResult().toObjects(fruitCategoryClasses.get(collection).getClass())) {
-                            if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))){
+                            if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))) {
                                 fruitsMap.put(fruit.getCategory(), fruit);
                             }
                         }
@@ -140,11 +145,11 @@ public class DataProvider {
             return new ArrayList<Fruit>(fruitsMap.values());
         }
 
-        for (String filter : filterCategories){
+        for (String filter : filterCategories) {
             db.collection(filter).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
                 if (task.isSuccessful()) {
                     for (Fruit fruit : task.getResult().toObjects(fruitCategoryClasses.get(filter).getClass())) {
-                        if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))){
+                        if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))) {
                             fruitsMap.put(fruit.getCategory(), fruit);
                         }
                     }
@@ -165,5 +170,23 @@ public class DataProvider {
         categoryList.add(new Category("Kiwifruits"));
         categoryList.add(new Category("Oranges"));
         return categoryList;
+    }
+
+    public static void updatePopularityToFirestore(IProduct fruit) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(fruit.getCategory())
+                .document(fruit.getCategory() + fruit.getId())
+                .set(fruit)
+                .addOnSuccessListener(unused
+                        -> Log.d(fruit.getCategory() + " Collection Update",
+                        "Popularity updated to " + fruit.getPopularity() + "."))
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(fruit.getCategory() + " Collection Update",
+                                "Popularity could not be updated to " + fruit.getPopularity()
+                                        + ".");
+                    }
+                });
     }
 }

@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
+import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.models.IProduct;
 import com.example.fruitmarket.R;
 
@@ -50,6 +51,8 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
+        fruit.incrementPopularity();
+        DataProvider.updatePopularityToFirestore(fruit);
 
         vh = new DetailsActivity.ViewHolder();
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
