@@ -1,23 +1,19 @@
-package com.example.fruitmarket.fruit;
-
-import com.example.fruitmarket.IProduct;
-import com.example.fruitmarket.PriceMetric;
+package com.example.fruitmarket.models;
 
 import java.util.ArrayList;
 
 public abstract class Fruit implements IProduct {
-    private long id;
-    private String name;
-    private String category;
-    private String producer;
-    private ArrayList<String> images;
-    private String variety;
-    private String[] description;
-    private float price;
-    private PriceMetric priceMetric;
-    private boolean inStock;
-    private int popularity;
-    private boolean isFeatured;
+    long id;
+    String name;
+    String category;
+    String producer;
+    ArrayList<String> images;
+    String variety;
+    String description;
+    float price;
+    PriceMetric priceMetric;
+    boolean inStock;
+    int popularity;
 
     public long getId() {
         return id;
@@ -71,11 +67,11 @@ public abstract class Fruit implements IProduct {
     }
 
     @Override
-    public String[] getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String[] description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -96,11 +92,11 @@ public abstract class Fruit implements IProduct {
     }
 
     @Override
-    public Boolean getInStock() {
+    public boolean getInStock() {
         return inStock;
     }
 
-    public void setInStock(Boolean inStock) {
+    public void setInStock(boolean inStock) {
         this.inStock = inStock;
     }
 
@@ -110,13 +106,5 @@ public abstract class Fruit implements IProduct {
 
     public void setPopularity(int popularity) {
         this.popularity = popularity;
-    }
-
-    public boolean checkIfFeatured() {
-        return isFeatured;
-    }
-
-    public void setIsFeatured(boolean isFeatured) {
-        this.isFeatured = isFeatured;
     }
 }

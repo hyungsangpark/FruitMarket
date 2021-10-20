@@ -1,10 +1,14 @@
-package com.example.fruitmarket.fruit;
+package com.example.fruitmarket.models;
 
-public class Feijoa {
-    private Boolean ripe;
-    private String colour;
-    private Boolean outOfSeason;
-    private float seedToPulpRatio;
+public class Feijoa extends Fruit {
+    Boolean ripe;
+    String skinColour;
+    Boolean outOfSeason;
+    float seedToPulpRatio;
+
+    public Feijoa() {
+
+    }
 
     public Boolean getRipe() {
         return ripe;
@@ -14,12 +18,12 @@ public class Feijoa {
         this.ripe = ripe;
     }
 
-    public String getColour() {
-        return colour;
+    public String getSkinColour() {
+        return skinColour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
+    public void setSkinColour(String skinColour) {
+        this.skinColour = skinColour;
     }
 
     public Boolean getOutOfSeason() {

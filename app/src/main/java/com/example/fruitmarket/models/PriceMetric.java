@@ -1,4 +1,4 @@
-package com.example.fruitmarket;
+package com.example.fruitmarket.models;
 
 public enum PriceMetric {
     PER_KG,

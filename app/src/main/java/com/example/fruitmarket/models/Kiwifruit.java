@@ -1,12 +1,16 @@
-package com.example.fruitmarket.fruit;
+package com.example.fruitmarket.models;
 
-public class Kiwifruit extends Fruit{
+public class Kiwifruit extends Fruit {
 
-    private Boolean ripe;
-    private Boolean hybrid;
-    private float seedToPulpRatio;
-    private Boolean containsHLActinidain;
-    private Boolean outOfSeason;
+    Boolean ripe;
+    Boolean hybrid;
+    float seedToPulpRatio;
+    Boolean containsHLActinidain;
+    Boolean outOfSeason;
+
+    public Kiwifruit() {
+
+    }
 
     public Boolean getRipe() {
         return ripe;

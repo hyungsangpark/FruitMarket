@@ -4,7 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.fruitmarket.fruit.Fruit;
+import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
 import java.util.Collections;

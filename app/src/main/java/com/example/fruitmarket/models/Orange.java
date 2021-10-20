@@ -1,12 +1,16 @@
-package com.example.fruitmarket.fruit;
+package com.example.fruitmarket.models;
 
-public class Orange extends Fruit{
+public class Orange extends Fruit {
 
-    private ProduceSeason produceSeason;
-    private String usage;
-    private String grade;
-    private Boolean seedless;
-    private Boolean sweetened;
+    ProduceSeason produceSeason;
+    String usage;
+    String grade;
+    Boolean seedless;
+    Boolean sweetened;
+
+    public Orange() {
+
+    }
 
     public ProduceSeason getProduceSeason() {
         return produceSeason;
