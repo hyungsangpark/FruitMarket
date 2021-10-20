@@ -52,8 +52,7 @@ public class CategoryFilterAdapter extends RecyclerView.Adapter<CategoryFilterAd
             // Run the on click event.
             filterButtonOnClick.accept(clickedCategory);
 
-            // TODO: Included Selected Category as the filter.
-            Toast.makeText(mContext, clickedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, clickedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
         }
     }
 

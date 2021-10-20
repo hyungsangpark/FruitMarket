@@ -39,9 +39,7 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
         mLayoutID = resource;
         searchKeyword = "";
         mSearchItems = new ArrayList<>(objects);
-//        mSearchItemsSuggested = objects;
         mSearchItemsSuggested = new ArrayList<>();
-//        mSearchItemsSuggested.removeAll(mSearchItems);
         mSearchHistory = new ArrayList<>();
         // TODO: Two lines below are for debug purposes.
         mSearchHistory.add("Ho Seok's Orchard");
@@ -59,11 +57,7 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
                     .inflate(mLayoutID, parent, false);
         }
 
-
         String currentSearchSuggestion = mSearchItemsSuggested.get(position);
-        Log.d("getView", "mSearchItems(" + mSearchItems.size() + "): " + mSearchItems);
-        Log.d("getView", "mSearchItemsSuggested(" + mSearchItemsSuggested.size() + "): " + mSearchItemsSuggested);
-        Log.d("getView", "currentSearchSuggestion: " + currentSearchSuggestion);
 
         // Set image visibility based on whether it is present in the search history.
         ImageView historyIcon = currentSearchSuggestionItem
@@ -101,7 +95,6 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
             numSuggestedItems = mSearchItemsSuggested.size();
         }
         return Math.min(numSuggestedItems, MAX_NUM_SUGGESTIONS);
-//        return mSearchItemsSuggested.size();
     }
 
     public void updateSearchItems(List<String> newItems) {
@@ -134,7 +127,7 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
                         try {
                             if (searchItem.toLowerCase().contains(searchKeyword)) result.add(searchItem);
                         } catch (NullPointerException e) {
-                            Log.d("NullPointerException", "previous item: " + previousItem);
+                            Log.e("NullPointerException", "Previous item: " + previousItem + ". Maybe check firebase to see whether it's missing this field?");
                         }
                         previousItem = searchItem;
                     }

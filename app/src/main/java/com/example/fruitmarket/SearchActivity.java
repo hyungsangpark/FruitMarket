@@ -117,14 +117,25 @@ public class SearchActivity extends AppCompatActivity {
         // Category filter array
         rvButtons = findViewById(R.id.category_filter_recycler_view);
         // TODO: Modify this array to import from a legitimate source of these categories.
-//        categories = Arrays.asList("Kiwifruit", "Apple", "Orange", "Blueberry", "Feijoa");
         categories = Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges");
         categoryFilterButtonsAdapter = new CategoryFilterAdapter(categories, (selectedCategory) -> {
-            if (filteredCategories.contains(selectedCategory))
+            if (filteredCategories.contains(selectedCategory)) {
+                // Excluded Selected Category as the filter.
+                filteredCategories.remove(selectedCategory);
+            } else {
+                // Included Selected Category as the filter.
+                filteredCategories.add(selectedCategory);
+            }
 
-            filteredCategories.add(selectedCategory);
-            // TODO: Included Selected Category as the filter.
-            Toast.makeText(getBaseContext(), selectedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
+            // If there is no particular category selected, display every single category.
+            if (filteredCategories.isEmpty()) filteredCategories.addAll(categories);
+
+            // Update search items according to
+            List<String> searchItems = new ArrayList<>();
+            for (String filteredCategory : filteredCategories) {
+                searchItems.addAll(fruitsData.get(filteredCategory));
+            }
+            searchAutoCompleteAdaptor.updateSearchItems(searchItems);
         });
         rvButtons.setAdapter(categoryFilterButtonsAdapter);
         rvButtons.addItemDecoration(new CategoryFilterAdapter.MarginItemDecoration(
@@ -135,20 +146,8 @@ public class SearchActivity extends AppCompatActivity {
         rvButtons.setLayoutManager(lm);
 
         // Auto Suggestion
-        searchSuggestions = findViewById(R.id.search_suggestions_list_view);
-//        List<Fruit> fruitsData = fetchFruitsData();
-//        Log.d("searchKeywords", "onCreate: " + fruitsData);
-
-//        List<String> searchKeywords = new ArrayList<>();
-//        for (List<String> fruitCollection : fruitsData.values()) {
-//            // TODO: Confirm what to include in the search keywords.
-////            searchKeywords.add(fruit.getName());
-////            searchKeywords.add(fruit.getProducer());
-////            searchKeywords.add(fruit.getVariety());
-//            searchKeywords.addAll(fruitCollection);
-//        }
-
         searchAutoCompleteAdaptor = new SearchAutoCompleteAdapter(this, R.layout.item_search_suggestion, new ArrayList<>());
+        searchSuggestions = findViewById(R.id.search_suggestions_list_view);
         searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
         searchSuggestions.setTextFilterEnabled(true);
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -170,16 +169,11 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void fetchFruitsData(Map<String, List<String>> fruitsMap) {
-//        List<Fruit> fruitsList = new LinkedList<>();
         // TODO: Extract these hard-coded values into DataProviders.
         String[] collections = {"apples", "blueberries", "feijoas", "kiwifruits", "oranges"};
-//        Fruit[] fruitCategoryInstances = {new Apple(), new Blueberry(), new Feijoa(), new Kiwifruit(), new Orange()};
-
-//        Map<String, List<String>> fruitsMap = new HashMap<>();
         for (String collection : collections) {
             fruitsMap.put(collection, new ArrayList<>());
         }
-//        fruitsMap.keySet().addAll(Arrays.asList(collections));
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
         fruitCategoryClasses.put("apples", new Apple());
@@ -199,16 +193,12 @@ public class SearchActivity extends AppCompatActivity {
                         fruitsMap.get(collection).add(fruit.getProducer());
                         fruitsMap.get(collection).add(fruit.getVariety());
 
-//                        fruitsList.add(fruit);
                         Log.i("Parsing " + collection, fruit.getName() + " loaded.");
                     }
                     if (fruitsMap.get(collection).size() > 0) {
                         Log.i("Getting fruits", "Success");
-                        // Once the task is successful and data is fetched, propagate the adaptor.
-//                        return fruitsList;
-//                        searchAutoCompleteAdaptor.updateSearchItems(fruitsMap.get(collection));
+                        // Once the task is successful add the data to the search items of the auto complete adapter.
                         searchAutoCompleteAdaptor.addSearchItems(fruitsMap.get(collection));
-//                        propagateAdaptor(fruitsMap.get(collection));
                     } else {
                         Toast.makeText(getBaseContext(),
                                 "Collection was empty!",
@@ -223,65 +213,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         }
-//        return fruitsMap;
-
-//        for (int i = 0; i < fruitCategoryInstances.length; i++) {
-//            int finalI = i;
-//            db.collection(collections[i]).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
-//                if (task.isSuccessful()) {
-//                    for (Fruit apple : task.getResult().toObjects(fruitCategoryInstances[finalI].getClass())) {
-//                        fruitsList.add(apple);
-//                        Log.i("Parsing " + collections[finalI], apple.getName() + " loaded.");
-//                    }
-//                    if (fruitsList.size() > 0) {
-//                        Log.i("Getting fruits", "Success");
-//                        // Once the task is successful and data is fetched, propagate the adaptor.
-////                        return fruitsList;
-////                        propagateAdaptor(fruitsList);
-//                    } else {
-//                        Toast.makeText(getBaseContext(),
-//                                "Collection was empty!",
-//                                Toast.LENGTH_LONG)
-//                                .show();
-//                    }
-//                } else {
-//                    Toast.makeText(getBaseContext(),
-//                            "Loading apples collection failed from Firestore!",
-//                            Toast.LENGTH_LONG)
-//                            .show();
-//                }
-//            });
-//        }
-//        return fruitsList;
     }
-
-//    private void propagateAdaptor(List<String> searchKeywords) {
-////        List<String> searchKeywords = new ArrayList<>();
-////        for (Fruit fruit : data) {
-////            // TODO: Confirm what to include in the search keywords.
-////            searchKeywords.add(fruit.getName());
-////            searchKeywords.add(fruit.getProducer());
-////            searchKeywords.add(fruit.getVariety());
-////        }
-////        SearchAutoCompleteAdaptor searchAutoCompleteAdaptor = new SearchAutoCompleteAdaptor(this, R.layout.item_search_suggestion, searchKeywords);
-////        searchSuggestions.setAdapter(searchAutoCompleteAdaptor);
-////        searchSuggestions.setTextFilterEnabled(true);
-////        searchEditText.addTextChangedListener(new TextWatcher() {
-////            @Override
-////            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-////            }
-////
-////            @Override
-////            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-////                searchAutoCompleteAdaptor.getFilter().filter(charSequence.toString());
-////            }
-////
-////            @Override
-////            public void afterTextChanged(Editable editable) {
-////            }
-////        });
-//        searchAutoCompleteAdaptor.updateSearchItems(searchKeywords);
-//    }
 
     @Override
     public boolean onSupportNavigateUp() {
