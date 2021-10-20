@@ -1,8 +1,5 @@
 package com.example.fruitmarket.data;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 import com.example.fruitmarket.models.Apple;
@@ -18,11 +15,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class DataProvider {
 
@@ -40,7 +34,12 @@ public class DataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<Long, Fruit> fruitsMap = new HashMap<>();
-        fruitsMap.put(0L, new Fruit() {});
+        fruitsMap.put(0L, new Fruit() {
+            @Override
+            public List<String> getAttributeValues() {
+                return null;
+            }
+        });
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
         fruitCategoryClasses.put("apples", new Apple());
@@ -73,7 +72,12 @@ public class DataProvider {
         fruitCategoryClasses.put("oranges", new Orange());
 
         Map<String, Fruit> fruitsMap = new HashMap<>();
-        fruitsMap.put("", new Fruit() {});
+        fruitsMap.put("", new Fruit() {
+            @Override
+            public List<String> getAttributeValues() {
+                return null;
+            }
+        });
 
         if (filterCategories.isEmpty()){
             for (String collection : fruitsMap.keySet()) {
