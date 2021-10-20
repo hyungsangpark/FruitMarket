@@ -52,7 +52,7 @@ public abstract class Fruit implements IProduct {
         this.producer = producer;
     }
 
-    public ArrayList<String> getImages() {
+    public List<String> getImages() {
         return images;
     }
 

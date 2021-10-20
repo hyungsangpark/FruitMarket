@@ -54,6 +54,12 @@ public class DetailsActivity extends AppCompatActivity {
         fruit.incrementPopularity();
         DataProvider.updatePopularityToFirestore(fruit);
 
+        for (int i = 0; i < 3; i++) {
+            images[i] = DetailsActivity.this.getResources().getIdentifier(
+                    fruit.getImages().get(i), "drawable",
+                    DetailsActivity.this.getPackageName());
+        }
+
         vh = new DetailsActivity.ViewHolder();
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
         vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);

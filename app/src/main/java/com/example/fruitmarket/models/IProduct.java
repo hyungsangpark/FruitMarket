@@ -1,5 +1,6 @@
 package com.example.fruitmarket.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IProduct {
@@ -14,4 +15,5 @@ public interface IProduct {
     public void incrementPopularity();
     public List<String> getAttributeNames();
     public List<String> getAttributeValues();
+    public List<String> getImages();
 }
