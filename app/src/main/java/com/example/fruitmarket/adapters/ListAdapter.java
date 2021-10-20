@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter {
-    public ListAdapter(ArrayList<Fruit> fruitList) {
+    public ListAdapter(List<Fruit> fruitList) {
     }
 
     @NonNull
