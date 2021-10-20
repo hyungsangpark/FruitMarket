@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="162dp">
 
         <ImageView
             android:id="@+id/list_item_image"
@@ -31,10 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="9dp"
+            android:layout_marginStart="288dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="295dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="19dp"
             android:text="$9.99"
             android:textSize="16dp"
             android:textStyle="italic" />
@@ -45,10 +45,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="331dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="295dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="19dp"
             android:text="per KG"
             android:textSize="16dp"
             android:textStyle="italic" />
@@ -62,9 +62,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="295dp"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="19dp"
             android:text="Gala Apples"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/list_item_producer"
@@ -73,7 +74,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="9dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="5dp"
             android:text="Yuwei's Orchard" />
 
     </RelativeLayout>

@@ -9,33 +9,35 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.R;
+import com.example.fruitmarket.activities.DetailsActivity;
 import com.example.fruitmarket.models.Fruit;
 
 import java.util.List;
 
 public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHolder> {
 
-    public static final String TOP_PICKS_KEY = "topPicks";
+    public static final String TOP_PICKS_KEY = "TOP_PICKS_KEY";
 
     private List<Fruit> topPicks;
     private Context context;
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView topPickTextView;
+        private TextView topPickNameTextView;
+        private TextView topPickProducerTextView;
         private ImageView topPickImageView;
 
         public ViewHolder(View view ){
             super(view);
             view.setOnClickListener(this); //setting a click listener for the top pick part
             //Setting the views
-            topPickTextView = (TextView) view.findViewById(R.id.top_pick_text);
+            topPickNameTextView = (TextView) view.findViewById(R.id.top_pick_item_name);
+            topPickProducerTextView = (TextView) view.findViewById(R.id.top_pick_item_producer);
             topPickImageView = (ImageView) view.findViewById(R.id.top_pick_image);
-
         }
 
         @Override
@@ -43,33 +45,32 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
             //When top item is clicked
             Activity activity = (Activity) context;
             Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra(TOP_PICKS_KEY, topPicks.get(getAdapterPosition())); //passing the current PcPart into the intent
+            intent.putExtra(TOP_PICKS_KEY, String.valueOf(topPicks.get(getAdapterPosition())));
             activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top); //setting the slide animation
-
+            activity.overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
         }
     }
     //passing in the data to be adapted/set to the view
     public TopPicksAdapter(List<Fruit> data){ topPicks = data; }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         context = viewGroup.getContext(); //setting the context
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.top_pick_item, viewGroup, false); //inflating the view with data
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.top_pick_item, viewGroup, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(TopPicksAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.topPickTextView.setText(topPicks.get(position).getCategory()); //setting the category name for the part
-        int imageID = context.getResources().getIdentifier(topPicks.get(position).getImageIDs().get(0), "drawable", context.getPackageName()); //extracting the id of first image
-        viewHolder.topPickImageView.setImageResource(imageID); //setting the image for the part
+    public void onBindViewHolder(TopPicksAdapter.ViewHolder vHolder, int position) {
+        Fruit thisFruit = topPicks.get(position);
+        vHolder.topPickNameTextView.setText(thisFruit.getName());
+        vHolder.topPickProducerTextView.setText(thisFruit.getProducer());
+        int imageID =context.getResources().getIdentifier(
+                thisFruit.getImages().get(0), "drawable", context.getPackageName());
+        vHolder.topPickImageView.setImageResource(imageID);
     }
 
     @Override
     public int getItemCount() { return topPicks.size(); }
-
-
 }
-
