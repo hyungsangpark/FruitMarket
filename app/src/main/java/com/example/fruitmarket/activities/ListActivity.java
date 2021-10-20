@@ -18,9 +18,7 @@ import com.example.fruitmarket.models.Fruit;
 import com.example.fruitmarket.data.DataProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -72,7 +70,7 @@ public class ListActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         //Set the slide transition when the back button is pressed
-        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_to_right);
+        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
 
     }
 
