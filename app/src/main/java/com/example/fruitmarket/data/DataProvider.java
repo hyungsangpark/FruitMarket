@@ -53,19 +53,19 @@ public class DataProvider {
             }
         });
 
-        for (String collection : fruitsMap.keySet()) {
-            db.collection(collection).get().addOnCompleteListener(
+        for (Category collection : getFruitCategories()) {
+            db.collection(collection.getCategoryName()).get().addOnCompleteListener(
                     (@NonNull Task<QuerySnapshot> task) -> {
                         if (task.isSuccessful()) {
                             for (Fruit fruit : task.getResult().toObjects(
-                                    fruitCategoryClasses.get(collection).getClass())) {
+                                    fruitCategoryClasses.get(collection.getCategoryName()).getClass())) {
                                 fruitsMap.put(fruit.getCategory(), fruit);
                             }
                         }
                     });
         }
 
-        List<Fruit> allFruits = (List<Fruit>) fruitsMap.values();
+        List<Fruit> allFruits = new ArrayList<Fruit>(fruitsMap.values());
         allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
         return allFruits.subList(0, 10); // Return top 10 popular fruits.
     }
@@ -103,8 +103,7 @@ public class DataProvider {
         });
         fruitsMap.remove(0L);
 
-        List<Fruit> fruitsList = new ArrayList<Fruit>(fruitsMap.values());
-        return fruitsList;
+        return new ArrayList<Fruit>(fruitsMap.values());
     }
 
     public List<Fruit> getMatchingSearchTerm(String searchTerm, ArrayList<String> filterCategories) {
@@ -131,10 +130,10 @@ public class DataProvider {
         });
 
         if (filterCategories.isEmpty()) {
-            for (String collection : fruitsMap.keySet()) {
-                db.collection(collection).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
+            for (Category collection : getFruitCategories()) {
+                db.collection(collection.getCategoryName()).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task) -> {
                     if (task.isSuccessful()) {
-                        for (Fruit fruit : task.getResult().toObjects(fruitCategoryClasses.get(collection).getClass())) {
+                        for (Fruit fruit : task.getResult().toObjects(fruitCategoryClasses.get(collection.getCategoryName()).getClass())) {
                             if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))) {
                                 fruitsMap.put(fruit.getCategory(), fruit);
                             }
