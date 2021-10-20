@@ -1,6 +1,7 @@
 package com.example.fruitmarket.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Fruit implements IProduct {
     long id;
@@ -106,5 +107,24 @@ public abstract class Fruit implements IProduct {
 
     public void setPopularity(int popularity) {
         this.popularity = popularity;
+    }
+
+    public abstract List<String> getAttributeValues();
+
+    public List<String> getFruitAttributeValues() {
+        List<String> values = new ArrayList<>();
+        values.add(name);
+        values.add(producer);
+        values.add(variety);
+        values.add(Float.toString(price));
+        values.add(priceMetric.toString());
+
+        if (inStock) {
+            values.add("In stock");
+        } else {
+            values.add("Out of stock");
+        }
+
+        return values;
     }
 }

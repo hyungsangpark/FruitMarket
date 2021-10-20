@@ -1,5 +1,8 @@
 package com.example.fruitmarket.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Feijoa extends Fruit {
     Boolean ripe;
     String skinColour;
@@ -40,5 +43,28 @@ public class Feijoa extends Fruit {
 
     public void setSeedToPulpRatio(float seedToPulpRatio) {
         this.seedToPulpRatio = seedToPulpRatio;
+    }
+
+    public List<String> getAttributeValues() {
+        List<String> values = new ArrayList<>();
+        values.addAll(getFruitAttributeValues());
+
+        if (ripe) {
+            values.add("Yes");
+        } else {
+            values.add("No");
+        }
+
+        values.add(skinColour);
+
+        if (outOfSeason) {
+            values.add("Yes");
+        } else {
+            values.add("No");
+        }
+
+        values.add(Float.toString(seedToPulpRatio));
+
+        return values;
     }
 }

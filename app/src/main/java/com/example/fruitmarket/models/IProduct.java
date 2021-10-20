@@ -1,5 +1,7 @@
 package com.example.fruitmarket.models;
 
+import java.util.List;
+
 public interface IProduct {
 
     public String getName();
@@ -7,5 +9,5 @@ public interface IProduct {
     public String getProducer();
     public String getDescription();
     public boolean getInStock();
-
+    public List<String> getAttributeValues();
 }

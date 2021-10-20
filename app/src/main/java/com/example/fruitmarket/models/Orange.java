@@ -1,5 +1,8 @@
 package com.example.fruitmarket.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Orange extends Fruit {
 
     ProduceSeason produceSeason;
@@ -50,5 +53,27 @@ public class Orange extends Fruit {
 
     public void setSweetened(Boolean sweetened) {
         this.sweetened = sweetened;
+    }
+
+    public List<String> getAttributeValues() {
+        List<String> values = new ArrayList<>();
+        values.addAll(getFruitAttributeValues());
+        values.add(produceSeason.toString());
+        values.add(usage);
+        values.add(grade);
+
+        if (seedless) {
+            values.add("Yes");
+        } else {
+            values.add("No");
+        }
+
+        if (sweetened) {
+            values.add("Yes");
+        } else {
+            values.add("No");
+        }
+
+        return values;
     }
 }

@@ -1,6 +1,9 @@
 package com.example.fruitmarket.models;
 
-public class Apple extends Fruit{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Apple extends Fruit {
 
     ProduceSeason produceSeason;
     String usage;
@@ -50,5 +53,17 @@ public class Apple extends Fruit{
 
     public void setSize(RelativeSize size) {
         this.size = size;
+    }
+
+    public List<String> getAttributeValues() {
+        List<String> values = new ArrayList<>();
+        values.addAll(getFruitAttributeValues());
+        values.add(produceSeason.toString());
+        values.add(usage);
+        values.add(grade);
+        values.add(skinColour);
+        values.add(size.toString());
+
+        return values;
     }
 }
