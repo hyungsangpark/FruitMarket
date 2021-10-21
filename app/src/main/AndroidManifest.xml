@@ -10,13 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FruitMarket">
         <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activities.ListActivity"
             android:exported="true" />
 
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@menu/main_menu"
-            />
+            android:resource="@menu/main_menu" />
 
         <activity
             android:name=".activities.SearchActivity"
