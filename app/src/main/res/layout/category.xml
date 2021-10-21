@@ -23,15 +23,13 @@
 
         <TextView
             android:id="@+id/category_text"
-            android:layout_width="380dp"
+            android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginBottom="12dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:text="hi"
             android:textColor="@color/black"
-            android:text="hi"/>
+            android:textSize="20dp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
