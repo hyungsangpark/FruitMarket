@@ -1,9 +1,15 @@
 package com.example.fruitmarket.adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,12 +86,60 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         Fruit thisFruit = fruitsList.get(position);
         holder.itemNameTextView.setText(thisFruit.getName());
         holder.itemProducerTextView.setText(thisFruit.getProducer());
-        holder.itemPriceTextView.setText("Price: $"+ String.valueOf(thisFruit.getPrice()));
+        holder.itemPriceTextView.setText("$" + thisFruit.getPrice());
         holder.itemPriceMetricTextView.setText(thisFruit.getPriceMetric().toString());
-        int imageID = context.getResources().getIdentifier(
-                thisFruit.getImages().get(0), "drawable", context.getPackageName());
-        holder.itemImageView.setImageResource(imageID);
+        if (thisFruit.getImages() != null) {
+            String imageName =  thisFruit.getImages().get(0).split("\\.")[0];
+            int imageID = context.getResources().getIdentifier(
+                    imageName, "drawable", context.getPackageName());
+            Bitmap thumbnail = decodeSampledBitmapFromResource(context.getResources(),imageID, 100, 100);
+            holder.itemImageView.setImageBitmap(thumbnail);
+//            vHolder.topPickImageView.setImageResource(imageID);
+            Log.d(TAG, "onBindViewHolder: thumbnail - " + imageName + " with ID: " + imageID);
+        }
 
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res,
+                                                         int resId, int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth,
+                reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options,
+                                            int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and
+            // width
+            final int heightRatio = Math.round((float) height
+                    / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will
+            // guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+
+        return inSampleSize;
     }
 
     @Override

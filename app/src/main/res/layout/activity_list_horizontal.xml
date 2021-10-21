@@ -5,12 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/design_default_color_background"
-    tools:context=".activities.ListActivity">
+    tools:context=".activities.ListActivity"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:elevation="16dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_menu_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:elevation="4dp"
+            app:contentInsetStart="0dp"
+            app:navigationIcon="@drawable/ic_arrow_back">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/main_menu_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fruits_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fruits_list">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

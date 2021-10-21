@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryAdapter;
@@ -28,34 +29,30 @@ public class ListActivity extends AppCompatActivity {
     LinearLayoutManager listItemsLayoutManager;
     ListAdapter listAdapter;
 
-    DataProvider dataProvider;
+    DataProvider dataProvider = DataProvider.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_horizontal);
-        dataProvider = new DataProvider();
+        setSupportActionBar(findViewById(R.id.main_menu_app_bar));
+        TextView main_menu_title = (TextView)findViewById(R.id.main_menu_title);
 
         //Gets the intent
         Intent thisIntent = getIntent();
+
         //Passes in the category selected from MainActivity
         String categoryDataPassedIn = thisIntent.getStringExtra(CategoryAdapter.CATEGORY_LIST_KEY);
         String searchTermDataPassedIn = thisIntent.getStringExtra(SearchActivity.SEARCH_TERM_KEY);
         ArrayList<String> filterCategories = thisIntent.getStringArrayListExtra(SearchActivity.FILTER_CATEGORIES_KEY);
-        if (searchTermDataPassedIn == null){
-            //Setting actionbar logo and name to selected category
-            setTitle("  " + categoryDataPassedIn);
-            ActionBar actionBar = this.getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setLogo(R.mipmap.fruitmarket_logo);
-                actionBar.setDisplayUseLogoEnabled(true);
-            }
 
+        if (searchTermDataPassedIn == null){
             //Retrieving list of fruit of the selected category from dataProvider
-            fruitsList = dataProvider.getFruitsGivenCategory(new Category(categoryDataPassedIn));
+            fruitsList = dataProvider.getFruitsOfCategory(categoryDataPassedIn);
+            main_menu_title.setText(categoryDataPassedIn);
         } else {
-            fruitsList = dataProvider.getMatchingSearchTerm(searchTermDataPassedIn, filterCategories);
+            fruitsList = dataProvider.getFruitsFromSearchTerm(searchTermDataPassedIn, filterCategories);
+            main_menu_title.setText(searchTermDataPassedIn);
         }
 
         //Setting the recycler view
@@ -68,6 +65,8 @@ public class ListActivity extends AppCompatActivity {
         //Creating and setting a layout manager for the recycler view
         listItemsLayoutManager = new LinearLayoutManager(this);
         listItemsRecyclerView.setLayoutManager(listItemsLayoutManager);
+
+
     }
 
     @Override
