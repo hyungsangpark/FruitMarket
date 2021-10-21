@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
-        TextView fruitNameTextView, producerTextView;
+        TextView fruitNameTextView, producerTextView, header;
         LinearLayout nameContainer;
         TabLayout tabs;
     }
@@ -57,22 +57,30 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        // Enable Tool bar to work.
+        setSupportActionBar(findViewById(R.id.details_tool_bar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
         fruit.incrementPopularity();
         DataProvider.updatePopularityToFirestore(fruit);
 
         for (int i = 0; i < 3; i++) {
+            String imageName =  fruit.getImages().get(i).split("\\.")[0];
             images[i] = DetailsActivity.this.getResources().getIdentifier(
-                    fruit.getImages().get(i), "drawable",
+                    imageName, "drawable",
                     DetailsActivity.this.getPackageName());
         }
 
         vh = new DetailsActivity.ViewHolder();
+        vh.header = findViewById(R.id.details_header);
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
         vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
         vh.nameContainer = (LinearLayout) findViewById(R.id.name_container);
         vh.tabs = (TabLayout) findViewById(R.id.tabs);
 
+        vh.header.setText(fruit.getName());
         vh.fruitNameTextView.setText(fruit.getName());
         vh.producerTextView.setText(fruit.getProducer());
         setColour(fruit, vh.nameContainer, vh.tabs);
@@ -139,5 +147,11 @@ public class DetailsActivity extends AppCompatActivity {
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.purple_500, null));
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

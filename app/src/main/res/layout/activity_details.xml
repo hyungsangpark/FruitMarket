@@ -8,13 +8,52 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="16dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/details_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:elevation="4dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:navigationIcon="@drawable/ic_arrow_back">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/details_header"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:text="FruitName"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/imagesSlider"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="230dp" />
 
         <LinearLayout
             android:id="@+id/name_container"

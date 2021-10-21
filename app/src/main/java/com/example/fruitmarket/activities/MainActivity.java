@@ -1,18 +1,15 @@
 package com.example.fruitmarket.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
@@ -20,7 +17,6 @@ import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.TopPicksAdapter;
 import com.example.fruitmarket.data.DataProvider;
-import com.example.fruitmarket.data.SearchDataProvider;
 import com.example.fruitmarket.models.Apple;
 import com.example.fruitmarket.models.Blueberry;
 import com.example.fruitmarket.models.Category;
@@ -32,7 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -42,10 +37,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView topPicksRecyclerView;
-    List<Fruit> topPicks = new ArrayList<>();
-    LinearLayoutManager topPicksLayoutManager;
-    TopPicksAdapter topPicksAdapter;
-
     RecyclerView categoriesRecyclerView;
     List<Category> categories;
     LinearLayoutManager categoriesLayoutManager;
@@ -55,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ScrollView mainScrollView;
 
     DataProvider dataProvider = DataProvider.getInstance();
-
-    private class ViewHolder {
-
-    }
+    ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,51 +55,19 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("  " + "FruitMarket");
         setSupportActionBar(findViewById(R.id.main_menu_app_bar));
-//        ActionBar actionBar = this.getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setLogo(R.mipmap.fruitmarket_logo);
-//            actionBar.setDisplayUseLogoEnabled(true);
-//        }
 
         progressBar = findViewById(R.id.fruits_load_progressbar);
         mainScrollView = findViewById(R.id.main_scroll_view);
         topPicksRecyclerView = findViewById(R.id.top_picks);
         categoriesRecyclerView = findViewById(R.id.categories);
 
-        fetchFruits();
+        searchButton = findViewById(R.id.main_menu_search_icon);
+        searchButton.setOnClickListener(view -> {
+            Intent searchIntent = new Intent(getBaseContext(), SearchActivity.class);
+            startActivity(searchIntent);
+        });
 
-//        topPicksRecyclerView = (RecyclerView) findViewById(R.id.top_picks);
-//        categoriesRecyclerView = (RecyclerView) findViewById(R.id.categories);
-//
-//        topPicks = new ArrayList<>();
-//        topPicks.add(new Apple() {
-//            @Override
-//            public List<String> getAttributeNames() {
-//                return null;
-//            }
-//
-//            @Override
-//            public List<String> getAttributeValues() {
-//                return null;
-//            }
-//        });
-//        topPicksAdapter = new TopPicksAdapter(topPicks);
-//        dataProvider.getMostPopular(topPicksAdapter);
-//
-//        categories = dataProvider.getFruitCategories();
-//
-//
-//        categoryAdapter = new CategoryAdapter(categories);
-//
-//        topPicksRecyclerView.setAdapter(topPicksAdapter);
-//        categoriesRecyclerView.setAdapter(categoryAdapter);
-//
-//        topPicksLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-//        categoriesLayoutManager = new LinearLayoutManager(this);
-//
-//        topPicksRecyclerView.setLayoutManager(topPicksLayoutManager);
-//        categoriesRecyclerView.setLayoutManager(categoriesLayoutManager);
+        fetchFruits();
     }
 
     private Map<String, List<Fruit>> fruitsMap;
