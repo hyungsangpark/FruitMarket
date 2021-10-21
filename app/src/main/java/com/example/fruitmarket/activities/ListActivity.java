@@ -35,7 +35,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_horizontal);
-        setSupportActionBar(findViewById(R.id.main_menu_app_bar));
+        setSupportActionBar(findViewById(R.id.list_menu_app_bar));
         TextView main_menu_title = (TextView)findViewById(R.id.main_menu_title);
 
         //Gets the intent
@@ -70,14 +70,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //Set the slide transition when the back button is pressed
-        overridePendingTransition(R.anim.slide_to_left, R.anim.slide_from_right);
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -107,6 +99,12 @@ public class ListActivity extends AppCompatActivity {
                 return false;
             }
         });
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 }
