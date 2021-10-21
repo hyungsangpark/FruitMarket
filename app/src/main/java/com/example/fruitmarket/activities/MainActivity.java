@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     ScrollView mainScrollView;
 
-    DataProvider dataProvider = new DataProvider();
+    DataProvider dataProvider = DataProvider.getInstance();
 
     private class ViewHolder {
 

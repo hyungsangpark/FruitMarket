@@ -1,5 +1,6 @@
 package com.example.fruitmarket.data;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -34,15 +35,55 @@ public class DataProvider {
 
     private Map<String, List<Fruit>> fruitsMap;
 
-    public DataProvider() {
+    private static DataProvider instance;
 
+    public static DataProvider getInstance(){
+        if (instance == null) {
+            instance = new DataProvider();
+        }
+        return instance;
     }
+
+    private DataProvider() {}
 
     public void provideData(Map<String, List<Fruit>> fruitsMap) {
         this.fruitsMap = fruitsMap;
     }
 
-    public void getMostPopular(TopPicksAdapter topPicksAdapter) {
+    public List<Fruit> getFruitsOfCategory(String category){
+        return fruitsMap.get(category);
+    }
+
+    public List<Fruit> getFruitsFromSearchTerm(String searchTerm, List<String> filters){
+        List<Fruit> fruitsList = new ArrayList<>();
+        //with no filter
+        if (filters.isEmpty()){
+            return findUsingSearchTerm(searchTerm);
+        } else {
+            for (String filter : filters){
+                List<Fruit> fruitsOfFilterCategory = fruitsMap.get(filter);
+                for(Fruit fruit : fruitsOfFilterCategory){
+                    if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))) {
+                        fruitsList.add(fruit);
+                    }
+                }
+            }
+        }
+        return fruitsList;
+    }
+
+    private List<Fruit> findUsingSearchTerm(String searchTerm){
+        List<Fruit> fruitsList = new ArrayList<>();
+        for (List<Fruit> fullFruitsList : fruitsMap.values()){
+            for (Fruit fruit: fullFruitsList){
+                if ((fruit.getName().equals(searchTerm)) || (fruit.getVariety().equals(searchTerm)) || (fruit.getProducer().equals(searchTerm))) {
+                    fruitsList.add(fruit);
+                }
+            }
+        }
+        return fruitsList;
+    }
+    /*public void getMostPopular(TopPicksAdapter topPicksAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
@@ -170,7 +211,7 @@ public class DataProvider {
         fruitsMap.remove("");
 
         return new ArrayList<Fruit>(fruitsMap.values());
-    }
+    }*/
 
     public List<Category> getFruitCategories() {
         List<Category> categoryList = new ArrayList<>();
