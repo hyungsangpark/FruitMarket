@@ -50,4 +50,14 @@ public class Category {
     }
 
     public String getCategoryDisplayName(){ return categoryDisplayName; }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryName='" + categoryName + '\'' +
+                ", categoryImageName=" + categoryImageName +
+                ", categoryDisplayName='" + categoryDisplayName + '\'' +
+                ", categoryImages=" + categoryImages +
+                '}';
+    }
 }

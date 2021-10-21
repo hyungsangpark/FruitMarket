@@ -1,9 +1,14 @@
 package com.example.fruitmarket.data;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fruitmarket.activities.MainActivity;
 import com.example.fruitmarket.adapters.TopPicksAdapter;
 import com.example.fruitmarket.models.Apple;
 import com.example.fruitmarket.models.Blueberry;
@@ -27,8 +32,14 @@ import java.util.Map;
 
 public class DataProvider {
 
+    private Map<String, List<Fruit>> fruitsMap;
+
     public DataProvider() {
 
+    }
+
+    public void provideData(Map<String, List<Fruit>> fruitsMap) {
+        this.fruitsMap = fruitsMap;
     }
 
     public void getMostPopular(TopPicksAdapter topPicksAdapter) {
@@ -65,10 +76,9 @@ public class DataProvider {
         }
 
 
-
 //        Possibly use the line below as an alternative? but that's not the root of the problem.
 //        return allFruits.subList(0, Math.min(allFruits.size(), 10)); // Return top 10 popular fruits.
-         // Return top 10 popular fruits.
+        // Return top 10 popular fruits.
     }
 
 

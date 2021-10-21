@@ -1,8 +1,11 @@
 package com.example.fruitmarket.adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +81,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //Setting the text and image for the current category
         Category thisCategory = categories.get(position);
         holder.categoryTextView.setText(thisCategory.getCategoryDisplayName());
+        Log.d(TAG, "onBindViewHolder: thisCategory - " + thisCategory);
         int imageID = thisCategory.getCategoryImageName();
         holder.categoryImageView.setImageResource(imageID);
     }
