@@ -13,13 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,28 +64,9 @@ public class SearchActivity extends AppCompatActivity {
     private CategoryFilterAdapter categoryFilterButtonsAdapter;
     private ListView searchSuggestions;
     private SearchAutoCompleteAdapter searchAutoCompleteAdaptor;
+    private ArrayList<String> filteredCategories;
     public static final String SEARCH_TERM_KEY = "SEARCH_TERM";
     public static final String FILTER_CATEGORIES_KEY = "FILTER_CATEGORIES_KEY";
-
-    // Perhaps a class like this can be used for each category filter item.
-    public static class FilterCategory {
-        private final String name;
-        private final int color;
-
-        public FilterCategory(String name, int color) {
-            this.name = name;
-            this.color = color;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getColor() {
-            return color;
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +107,21 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        List<String> filteredCategories = new ArrayList<>();
+        searchEditText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+//                Log.i(TAG, "Enter pressed");
+//                Toast.makeText(getBaseContext(), "Enter Pressed!", Toast.LENGTH_SHORT).show();
+                String keyword = searchEditText.getText().toString();
+
+                Intent searchListIntent = new Intent(getBaseContext(), ListActivity.class);
+                searchListIntent.putExtra(SEARCH_TERM_KEY, keyword);
+                searchListIntent.putStringArrayListExtra(FILTER_CATEGORIES_KEY, filteredCategories);
+                startActivity(searchListIntent);
+            }
+            return false;
+        });
+
+        filteredCategories = new ArrayList<>();
         Map<String, Set<String>> fruitsData = new HashMap<>();
 
         // Category filter array
@@ -176,8 +175,12 @@ public class SearchActivity extends AppCompatActivity {
             String keyword = itemTextView.getText().toString();
 
             if (!keyword.startsWith(SearchAutoCompleteAdapter.NO_RESULT_DESCRIPTION)) {
-                // TODO: to see if it works.
-                Toast.makeText(getBaseContext(), "Selected: " + keyword, Toast.LENGTH_SHORT).show();
+                Intent searchListIntent = new Intent(getBaseContext(), ListActivity.class);
+                searchListIntent.putExtra(SEARCH_TERM_KEY, keyword);
+                searchListIntent.putStringArrayListExtra(FILTER_CATEGORIES_KEY, filteredCategories);
+                startActivity(searchListIntent);
+//                // TODO: to see if it works.
+//                Toast.makeText(getBaseContext(), "Selected: " + keyword, Toast.LENGTH_SHORT).show();
             }
         });
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -249,5 +252,14 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void closeKeyBoard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
