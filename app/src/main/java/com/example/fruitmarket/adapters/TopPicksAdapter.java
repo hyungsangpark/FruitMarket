@@ -3,6 +3,7 @@ package com.example.fruitmarket.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.fruitmarket.R;
 import com.example.fruitmarket.activities.DetailsActivity;
 import com.example.fruitmarket.models.Fruit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
             //When top item is clicked
             Activity activity = (Activity) context;
             Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra(TOP_PICKS_KEY, String.valueOf(topPicks.get(getAdapterPosition())));
+            intent.putExtra("IProduct", (Serializable)topPicks.get(getAdapterPosition()));
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
         }

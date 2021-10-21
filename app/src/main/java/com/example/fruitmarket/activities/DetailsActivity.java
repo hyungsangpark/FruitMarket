@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -26,8 +28,8 @@ import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
-        TextView fruitNameTextView, producerTextView, descriptionTextView, priceTextView,
-                availabilityTextView;
+        TextView fruitNameTextView, producerTextView;
+        LinearLayout nameContainer;
     }
 
     DetailsActivity.ViewHolder vh;
@@ -63,10 +65,11 @@ public class DetailsActivity extends AppCompatActivity {
         vh = new DetailsActivity.ViewHolder();
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
         vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
-        vh.descriptionTextView = (TextView) findViewById(R.id.description_text_view);
+        vh.nameContainer = (LinearLayout) findViewById(R.id.name_container);
 
         vh.fruitNameTextView.setText(fruit.getName());
         vh.producerTextView.setText(fruit.getProducer());
+        setColour(fruit, vh.nameContainer);
 
         // Initializing the ViewPager Object
         mViewPager = (ViewPager)findViewById(R.id.imagesSlider);
@@ -85,14 +88,38 @@ public class DetailsActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         fruitDetails.setAdapter(adapter);
 
-//        // Create a LayoutManager
-//        LinearLayoutManager lm = new LinearLayoutManager(this);
-//
-//
-//        // Fore a Horizontal RecyclerView use
-//        // LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-//
-//        // Set layout manager to position the items
-//        rvContacts.setLayoutManager(lm);
+        // Create a LayoutManager
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+
+        // Set layout manager to position the items
+        fruitDetails.setLayoutManager(lm);
+    }
+
+    private void setColour(IProduct fruit, LinearLayout element) {
+        switch(fruit.getCategory()) {
+            case "Apple":
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.apples_highlight, null));
+                break;
+            case  "Blueberry":
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.blueberries_highlight, null));
+                break;
+            case "Feijoa":
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.feijoas_highlight, null));
+                break;
+            case "Kiwifruit":
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.kiwifruits_highlight, null));
+                break;
+            case "Orange":
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.oranges_highlight, null));
+                break;
+            default:
+                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
+                                           R.color.purple_500, null));
+        }
     }
 }
