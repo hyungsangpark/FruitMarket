@@ -29,5 +29,7 @@
     <color name="category_filter_button_stroke_unselected">#FFDBDBDB</color>
     <color name="kiwi_green_light">#8FCDDC39</color>
 
+    <color name="top_picks_background">#26494E0E</color>
+
     <color name="status_bar_color">#FFE7E4E4</color>
 </resources>
