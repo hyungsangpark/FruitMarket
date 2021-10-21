@@ -56,7 +56,6 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
             Intent intent = new Intent(context, DetailsActivity.class);
             intent.putExtra("IProduct", (Serializable)topPicks.get(getAdapterPosition()));
             activity.startActivity(intent);
-            activity.overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top);
         }
     }
 
