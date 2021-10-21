@@ -11,7 +11,7 @@
         android:theme="@style/Theme.FruitMarket">
         <activity
             android:name=".activities.ListActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.actions"
@@ -21,6 +21,11 @@
         <activity
             android:name=".activities.SearchActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".activities.DetailsActivity"
+            android:exported="true" />
+
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">
