@@ -16,6 +16,7 @@ import com.example.fruitmarket.R;
 import com.example.fruitmarket.activities.DetailsActivity;
 import com.example.fruitmarket.models.Fruit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHolder> {
@@ -51,7 +52,9 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
         }
     }
     //passing in the data to be adapted/set to the view
-    public TopPicksAdapter(List<Fruit> data){ topPicks = data; }
+    public TopPicksAdapter(List<Fruit> data){
+        topPicks = data;
+        }
 
     @NonNull
     @Override
@@ -67,11 +70,26 @@ public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHo
         Fruit thisFruit = topPicks.get(position);
         vHolder.topPickNameTextView.setText(thisFruit.getName());
         vHolder.topPickProducerTextView.setText(thisFruit.getProducer());
-        int imageID =context.getResources().getIdentifier(
-                thisFruit.getImages().get(0), "drawable", context.getPackageName());
-        vHolder.topPickImageView.setImageResource(imageID);
+        if (thisFruit.getImages() != null){
+            int imageID =context.getResources().getIdentifier(
+                    thisFruit.getImages().get(0), "drawable", context.getPackageName());
+            vHolder.topPickImageView.setImageResource(imageID);
+        }
     }
 
     @Override
-    public int getItemCount() { return topPicks.size(); }
+    public int getItemCount() {
+        int numTopPicks;
+        if (topPicks == null) {
+            numTopPicks = 0;
+        } else {
+            numTopPicks = topPicks.size();
+        }
+        return numTopPicks;
+    }
+
+    public void addTopPicksData(List<Fruit> mostPopular){
+        topPicks = mostPopular;
+        notifyDataSetChanged();
+    }
 }

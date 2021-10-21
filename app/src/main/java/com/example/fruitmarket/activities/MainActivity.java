@@ -15,9 +15,11 @@ import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.TopPicksAdapter;
 import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.data.SearchDataProvider;
+import com.example.fruitmarket.models.Apple;
 import com.example.fruitmarket.models.Category;
 import com.example.fruitmarket.models.Fruit;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView topPicksRecyclerView;
-    List<Fruit> topPicks;
+    List<Fruit> topPicks = new ArrayList<>();
     LinearLayoutManager topPicksLayoutManager;
     TopPicksAdapter topPicksAdapter;
 
@@ -54,10 +56,24 @@ public class MainActivity extends AppCompatActivity {
         topPicksRecyclerView = (RecyclerView) findViewById(R.id.top_picks);
         categoriesRecyclerView = (RecyclerView) findViewById(R.id.categories);
 
-        topPicks = dataProvider.getMostPopular();
+        topPicks = new ArrayList<>();
+        topPicks.add(new Apple() {
+            @Override
+            public List<String> getAttributeNames() {
+                return null;
+            }
+
+            @Override
+            public List<String> getAttributeValues() {
+                return null;
+            }
+        });
+        topPicksAdapter = new TopPicksAdapter(topPicks);
+        dataProvider.getMostPopular(topPicksAdapter);
+
         categories = dataProvider.getFruitCategories();
 
-        topPicksAdapter = new TopPicksAdapter(topPicks);
+
         categoryAdapter = new CategoryAdapter(categories);
 
         topPicksRecyclerView.setAdapter(topPicksAdapter);
@@ -108,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         //Refresh top picks
-        this.topPicks = dataProvider.getMostPopular();
         topPicksAdapter = new TopPicksAdapter(topPicks);
+        dataProvider.getMostPopular(topPicksAdapter);
         topPicksRecyclerView.setAdapter(topPicksAdapter);
     }
 }

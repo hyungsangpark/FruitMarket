@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.fruitmarket.adapters.TopPicksAdapter;
 import com.example.fruitmarket.models.Apple;
 import com.example.fruitmarket.models.Blueberry;
 import com.example.fruitmarket.models.Category;
@@ -30,7 +31,7 @@ public class DataProvider {
 
     }
 
-    public List<Fruit> getMostPopular() {
+    public void getMostPopular(TopPicksAdapter topPicksAdapter) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
@@ -51,19 +52,23 @@ public class DataProvider {
                                 Log.d("FruitFetched", collection.getCategoryName() + ": " + fruit);
                                 fruitsMap.get(collection.getCategoryName()).add(fruit);
                             }
+                            List<Fruit> allFruits = new ArrayList<>();
+                            for (List<Fruit> category : fruitsMap.values()) {
+                                allFruits.addAll(category);
+                            }
+                            allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
+                            Log.d("getMostPopular", "allFruits (" + allFruits.size() + "): " + allFruits);
+                            List<Fruit> mostPopular = allFruits.subList(0, 10);
+                            topPicksAdapter.addTopPicksData(mostPopular);
                         }
                     });
         }
 
-        List<Fruit> allFruits = new ArrayList<>();
-        for (List<Fruit> category : fruitsMap.values()) {
-            allFruits.addAll(category);
-        }
-        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
-        Log.d("getMostPopular", "allFruits (" + allFruits.size() + "): " + allFruits);
+
+
 //        Possibly use the line below as an alternative? but that's not the root of the problem.
 //        return allFruits.subList(0, Math.min(allFruits.size(), 10)); // Return top 10 popular fruits.
-        return allFruits.subList(0, 10); // Return top 10 popular fruits.
+         // Return top 10 popular fruits.
     }
 
 
