@@ -16,7 +16,7 @@ public class Category {
         categoryImages.put("Apples", R.drawable.apple_cat_img);
         categoryImages.put("Blueberries", R.drawable.blueberries_cat_img);
         categoryImages.put("Feijoas", R.drawable.feijoas_cat_img);
-        categoryImages.put("Kiwifruit", R.drawable.kiwifruit_cat_img);
+        categoryImages.put("Kiwifruits", R.drawable.kiwifruit_cat_img);
         categoryImages.put("Oranges", R.drawable.oranges_cat_img);
 
         switch (name) {
