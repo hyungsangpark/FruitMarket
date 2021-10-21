@@ -15,7 +15,7 @@
         android:elevation="16dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/main_menu_app_bar"
+            android:id="@+id/list_menu_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
