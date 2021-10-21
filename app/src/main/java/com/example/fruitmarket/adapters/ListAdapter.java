@@ -23,6 +23,7 @@ import com.example.fruitmarket.models.Fruit;
 import com.example.fruitmarket.R;
 import com.example.fruitmarket.activities.DetailsActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         private TextView itemNameTextView;
         private TextView itemProducerTextView;
         private TextView itemPriceTextView;
-        private TextView itemPriceMetricTextView;
 
         public ViewHolder(View v){
             super(v);
@@ -49,7 +49,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             itemNameTextView = (TextView) v.findViewById(R.id.list_item_name);
             itemProducerTextView = (TextView) v.findViewById(R.id.list_item_producer);
             itemPriceTextView = (TextView) v.findViewById(R.id.list_item_price);
-            itemPriceMetricTextView = (TextView) v.findViewById(R.id.list_item_priceMetric);
         }
 
         @Override
@@ -59,7 +58,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
             //Creating new intent to go to the details activity
             Intent intent = new Intent(context, DetailsActivity.class);
-            intent.putExtra(FRUIT_ITEM_KEY, String.valueOf(fruitsList.get(getAdapterPosition())));
+            intent.putExtra("IProduct", (Serializable)fruitsList.get(getAdapterPosition()));
 
             //Start activity and sets the slide transitions
             activity.startActivity(intent);
@@ -86,8 +85,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         Fruit thisFruit = fruitsList.get(position);
         holder.itemNameTextView.setText(thisFruit.getName());
         holder.itemProducerTextView.setText(thisFruit.getProducer());
-        holder.itemPriceTextView.setText("$" + thisFruit.getPrice());
-        holder.itemPriceMetricTextView.setText(thisFruit.getPriceMetric().toString());
+        holder.itemPriceTextView.setText("$" + thisFruit.getPrice() + " " + thisFruit.getPriceMetric().toString());
         if (thisFruit.getImages() != null) {
             String imageName =  thisFruit.getImages().get(0).split("\\.")[0];
             int imageID = context.getResources().getIdentifier(
