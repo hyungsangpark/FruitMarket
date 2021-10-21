@@ -8,6 +8,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="apples_dark">#A70B26</color>
+    <color name="blueberries_dark">#252739</color>
+    <color name="feijoas_dark">#29341E</color>
+    <color name="oranges_dark">#DF4E20</color>
+    <color name="kiwifruits_dark">#477507</color>
+
+    <color name="apples_background">#FBEAE6</color>
+    <color name="blueberries_background">#E0E3FF</color>
+    <color name="feijoas_background">#CCCEBB</color>
+    <color name="oranges_background">#FCDFC7</color>
+    <color name="kiwifruits_background">#E4E5DB</color>
+
+    <color name="apples_highlight">#A2011A</color>
+    <color name="blueberries_highlight">#8695B5</color>
+    <color name="feijoas_highlight">#628B5F</color>
+    <color name="oranges_highlight">#F87500</color>
+    <color name="kiwifruits_highlight">#AFBC2C</color>
+
     <color name="category_filter_button_stroke_unselected">#FFDBDBDB</color>
     <color name="kiwi_green_light">#8FCDDC39</color>
 
