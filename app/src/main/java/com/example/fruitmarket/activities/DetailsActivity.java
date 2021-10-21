@@ -62,8 +62,9 @@ public class DetailsActivity extends AppCompatActivity {
         DataProvider.updatePopularityToFirestore(fruit);
 
         for (int i = 0; i < 3; i++) {
+            String imageName =  fruit.getImages().get(i).split("\\.")[0];
             images[i] = DetailsActivity.this.getResources().getIdentifier(
-                    fruit.getImages().get(i), "drawable",
+                    imageName, "drawable",
                     DetailsActivity.this.getPackageName());
         }
 
