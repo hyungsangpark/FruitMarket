@@ -1,33 +1,21 @@
 package com.example.fruitmarket.activities;
 
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.models.IProduct;
-import com.example.fruitmarket.R;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
