@@ -51,8 +51,7 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         fruit = (IProduct) getIntent().getSerializableExtra("IProduct");
-        fruit.incrementPopularity();
-        DataProvider.getInstance().updatePopularityToFirestore(fruit);
+        DataProvider.getInstance().updatePopularity(fruit);
 
         for (int i = 0; i < 3; i++) {
             String imageName = fruit.getImages().get(i).split("\\.")[0];
