@@ -84,7 +84,6 @@ public abstract class Fruit implements IProduct, Serializable {
         BigDecimal bd = new BigDecimal(price);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.floatValue();
-//        return price;
     }
 
     public void setPrice(float price) {
@@ -130,6 +129,10 @@ public abstract class Fruit implements IProduct, Serializable {
 
     public abstract List<String> getAttributeNames();
 
+    /**
+     * Return all unique attributes names of this fruit as a list
+     * @return List<String> List of all unique attributes names of this fruit
+     */
     public List<String> getFruitAttributeNames() {
         List<String> names = new ArrayList<>();
         names.add("Variety:");
@@ -141,6 +144,10 @@ public abstract class Fruit implements IProduct, Serializable {
 
     public abstract List<String> getAttributeValues();
 
+    /**
+     * Return all unique attributes values of this fruit as a list
+     * @return List<String> List of all unique attributes values of this fruit
+     */
     public List<String> getFruitAttributeValues() {
         List<String> values = new ArrayList<>();
         values.add(variety);
@@ -155,8 +162,10 @@ public abstract class Fruit implements IProduct, Serializable {
         return values;
     }
 
-    // Possibly for debug purposes?
-
+    /**
+     * For debug purpose
+     * @return String of all attributes
+     */
     @Override
     public String toString() {
         return "Fruit{" +

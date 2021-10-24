@@ -50,6 +50,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Shows the search options and recent searches.
+ */
 public class SearchActivity extends AppCompatActivity {
 
     private EditText searchEditText;

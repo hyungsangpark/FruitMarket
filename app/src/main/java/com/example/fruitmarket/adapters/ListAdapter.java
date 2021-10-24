@@ -27,6 +27,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adapter for dealing with the GUI and data in DetailsActivity.
+ */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     public static final String FRUIT_ITEM_KEY = "FRUIT_ITEM_KEY";
@@ -93,11 +96,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     imageName, "drawable", context.getPackageName());
             Bitmap thumbnail = decodeSampledBitmapFromResource(context.getResources(),imageID, 100, 100);
             holder.itemImageView.setImageBitmap(thumbnail);
-//            vHolder.topPickImageView.setImageResource(imageID);
             Log.d(TAG, "onBindViewHolder: thumbnail - " + imageName + " with ID: " + imageID);
         }
     }
 
+    /**
+     * Decode the bitmap images so that images that are very large can be compressed.
+     * @param res - resource to be compressed
+     * @param resId - the id of the resource
+     * @param reqWidth - witdth of the resource
+     * @param reqHeight -height of the resource
+     * @return - decoded bitmap
+     */
     public static Bitmap decodeSampledBitmapFromResource(Resources res,
                                                          int resId, int reqWidth, int reqHeight) {
 
@@ -115,6 +125,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
+    /**
+     * Calculate the size of the image based on the ratios.
+     * @param options
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {
         // Raw height and width of image

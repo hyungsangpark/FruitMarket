@@ -21,10 +21,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Adapter for dealing with the GUI and data in SearchActivity that are related to auto complete.
+ */
 public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterable {
 
     private static final int MAX_NUM_SUGGESTIONS = 10;
-//    private static final int MAX_NUM_HISTORY_SUGGESTIONS = 3;
     public static final String NO_RESULT_DESCRIPTION = "No results with: ";
 
     // mLayoutId refers to the ListView item xml
