@@ -93,7 +93,7 @@ public class DetailsActivity extends AppCompatActivity {
         // Update the vh components with the details of the selected fruit.
         vh.header.setText(fruit.getName());
         fruitDescriptionAdapter.setColour(fruit, vh.titleContainerLinearLayout,
-                                          vh.tabLayout, this);
+                                          vh.tabLayout, this.getApplicationContext());
         vh.fruitNameTextView.setText(fruit.getName());
         vh.fruitProducerTextView.setText(fruit.getProducer());
         vh.fruitAboutTextView.setText(fruit.getDescription());
