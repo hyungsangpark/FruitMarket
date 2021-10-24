@@ -1,33 +1,21 @@
 package com.example.fruitmarket.activities;
 
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.models.IProduct;
-import com.example.fruitmarket.R;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
@@ -62,12 +50,12 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        fruit = (IProduct)getIntent().getSerializableExtra("IProduct");
+        fruit = (IProduct) getIntent().getSerializableExtra("IProduct");
         fruit.incrementPopularity();
-        DataProvider.updatePopularityToFirestore(fruit);
+        DataProvider.getInstance().updatePopularityToFirestore(fruit);
 
         for (int i = 0; i < 3; i++) {
-            String imageName =  fruit.getImages().get(i).split("\\.")[0];
+            String imageName = fruit.getImages().get(i).split("\\.")[0];
             images[i] = DetailsActivity.this.getResources().getIdentifier(
                     imageName, "drawable",
                     DetailsActivity.this.getPackageName());
@@ -86,7 +74,7 @@ public class DetailsActivity extends AppCompatActivity {
         setColour(fruit, vh.nameContainer, vh.tabs);
 
         // Initializing the ViewPager Object
-        mViewPager = (ViewPager)findViewById(R.id.imagesSlider);
+        mViewPager = (ViewPager) findViewById(R.id.imagesSlider);
 
         // Initializing the ViewPagerAdapter
         mViewPagerAdapter = new ViewPagerAdapter(DetailsActivity.this, images);
@@ -110,40 +98,40 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void setColour(IProduct fruit, LinearLayout element, TabLayout layout) {
-        switch(fruit.getCategory()) {
+        switch (fruit.getCategory()) {
             case "Apple":
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.apples_dark, null));
+                        R.color.apples_dark, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.apples_dark, null));
                 break;
-            case  "Blueberry":
+            case "Blueberry":
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.blueberries_dark, null));
+                        R.color.blueberries_dark, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.blueberries_dark, null));
                 break;
             case "Feijoa":
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.feijoas_dark, null));
+                        R.color.feijoas_dark, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.feijoas_dark, null));
                 break;
             case "Kiwifruit":
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.kiwifruits_dark, null));
+                        R.color.kiwifruits_dark, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.kiwifruits_dark, null));
                 break;
             case "Orange":
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.oranges_dark, null));
+                        R.color.oranges_dark, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.oranges_dark, null));
                 break;
             default:
                 element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                                           R.color.purple_500, null));
+                        R.color.purple_500, null));
                 layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
                         R.color.purple_500, null));
         }

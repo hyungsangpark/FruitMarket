@@ -1,23 +1,21 @@
 package com.example.fruitmarket.activities;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryAdapter;
 import com.example.fruitmarket.adapters.ListAdapter;
-import com.example.fruitmarket.models.Category;
-import com.example.fruitmarket.models.Fruit;
 import com.example.fruitmarket.data.DataProvider;
+import com.example.fruitmarket.models.Fruit;
 
 import java.util.ArrayList;
 import java.util.List;

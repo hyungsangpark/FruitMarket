@@ -43,9 +43,6 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
         mSearchItems = new ArrayList<>(objects);
         mSearchItemsSuggested = new ArrayList<>();
         mSearchHistory = new ArrayList<>();
-        // TODO: Two lines below are for debug purposes.
-        mSearchHistory.add("Ho Seok's Orchard");
-        mSearchHistory.add("Orangy Orange");
     }
 
     @NonNull
@@ -111,6 +108,10 @@ public class SearchAutoCompleteAdapter extends ArrayAdapter implements Filterabl
     public void addSearchItems(Collection<String> newItems) {
         mSearchItems.addAll(newItems);
         getFilter().filter(searchKeyword);
+    }
+
+    public void addKeywordSearched(String searchedKeyword) {
+        mSearchHistory.add(searchedKeyword);
     }
 
     @Override

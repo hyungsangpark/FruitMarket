@@ -1,6 +1,5 @@
 package com.example.fruitmarket.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IProduct {

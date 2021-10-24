@@ -1,17 +1,5 @@
 package com.example.fruitmarket.activities;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +18,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.R;
 import com.example.fruitmarket.adapters.CategoryFilterAdapter;
@@ -109,9 +105,10 @@ public class SearchActivity extends AppCompatActivity {
 
         searchEditText.setOnEditorActionListener((TextView v, int actionId, KeyEvent event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-//                Log.i(TAG, "Enter pressed");
-//                Toast.makeText(getBaseContext(), "Enter Pressed!", Toast.LENGTH_SHORT).show();
                 String keyword = searchEditText.getText().toString();
+
+                // Add keyword to the search.
+                searchAutoCompleteAdaptor.addKeywordSearched(keyword);
 
                 Intent searchListIntent = new Intent(getBaseContext(), ListActivity.class);
                 searchListIntent.putExtra(SEARCH_TERM_KEY, keyword);
@@ -175,12 +172,13 @@ public class SearchActivity extends AppCompatActivity {
             String keyword = itemTextView.getText().toString();
 
             if (!keyword.startsWith(SearchAutoCompleteAdapter.NO_RESULT_DESCRIPTION)) {
+                // Add keyword to the search.
+                searchAutoCompleteAdaptor.addKeywordSearched(keyword);
+
                 Intent searchListIntent = new Intent(getBaseContext(), ListActivity.class);
                 searchListIntent.putExtra(SEARCH_TERM_KEY, keyword);
                 searchListIntent.putStringArrayListExtra(FILTER_CATEGORIES_KEY, filteredCategories);
                 startActivity(searchListIntent);
-//                // TODO: to see if it works.
-//                Toast.makeText(getBaseContext(), "Selected: " + keyword, Toast.LENGTH_SHORT).show();
             }
         });
         searchEditText.addTextChangedListener(new TextWatcher() {

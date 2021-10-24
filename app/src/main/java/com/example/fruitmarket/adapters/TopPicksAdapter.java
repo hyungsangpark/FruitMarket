@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,7 +23,6 @@ import com.example.fruitmarket.activities.DetailsActivity;
 import com.example.fruitmarket.models.Fruit;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopPicksAdapter extends RecyclerView.Adapter<TopPicksAdapter.ViewHolder> {

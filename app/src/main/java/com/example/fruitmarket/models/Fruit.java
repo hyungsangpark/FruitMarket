@@ -1,6 +1,8 @@
 package com.example.fruitmarket.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +81,10 @@ public abstract class Fruit implements IProduct, Serializable {
     }
 
     public float getPrice() {
-        return price;
+        BigDecimal bd = new BigDecimal(price);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
+//        return price;
     }
 
     public void setPrice(float price) {
@@ -157,7 +162,16 @@ public abstract class Fruit implements IProduct, Serializable {
         return "Fruit{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", producer='" + producer + '\'' +
                 ", images=" + images +
+                ", variety='" + variety + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", priceMetric=" + priceMetric +
+                ", inStock=" + inStock +
+                ", popularity=" + popularity +
+                ", isFeatured=" + isFeatured +
                 '}';
     }
 }
