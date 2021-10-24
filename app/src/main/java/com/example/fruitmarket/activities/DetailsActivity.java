@@ -16,33 +16,34 @@ import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.models.IProduct;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+/**
+ * Shows the photos and details of the selected fruit.
+ *
+ * Author: Dave Shin
+ */
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
-        TextView fruitNameTextView, producerTextView, header, aboutTextView;
-        LinearLayout nameContainer;
-        TabLayout tabs;
-        TabItem aboutTabItem;
-        RecyclerView fruitDetails;
+        LinearLayout titleContainerLinearLayout; // Container that contains the name and producer
+                                                 // of the fruit.
+        TextView header;
+        TextView fruitNameTextView, fruitProducerTextView;
+        TabLayout tabLayout;
+        RecyclerView fruitDescriptionRecyclerView;
+        TextView fruitAboutTextView;
     }
-
     DetailsActivity.ViewHolder vh;
 
-    // creating object of ViewPager
-    ViewPager mViewPager;
+    ViewPager imagesViewPager; // ViewPager for fruitDescription.
+    ViewPagerAdapter imagesViewPagerAdapter;
+    FruitDetailsAdapter fruitDescriptionAdapter;
 
-    // images array
+    // Images array for fruit images. Initialise it with default images.
     int[] images = {R.drawable.gala_apple_rosie_1, R.drawable.gala_apple_rosie_2,
-            R.drawable.gala_apple_rosie_3};
-
-    // Creating Object of ViewPagerAdapter
-    ViewPagerAdapter mViewPagerAdapter;
+                    R.drawable.gala_apple_rosie_3};
 
     IProduct fruit;
-    FruitDetailsAdapter adapter;
-    RecyclerView fruitDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,13 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // Get the selected fruit.
         fruit = (IProduct) getIntent().getSerializableExtra("IProduct");
+
+        // Increase popularity per click.
         DataProvider.getInstance().updatePopularity(fruit);
 
+        // Get the images for the selected fruit.
         for (int i = 0; i < 3; i++) {
             String imageName = fruit.getImages().get(i).split("\\.")[0];
             images[i] = DetailsActivity.this.getResources().getIdentifier(
@@ -64,72 +69,62 @@ public class DetailsActivity extends AppCompatActivity {
                     DetailsActivity.this.getPackageName());
         }
 
+        // Initialise the vh components.
         vh = new DetailsActivity.ViewHolder();
         vh.header = findViewById(R.id.details_header);
+        vh.titleContainerLinearLayout = (LinearLayout) findViewById(R.id.name_container);
         vh.fruitNameTextView = (TextView) findViewById(R.id.fruit_name_text_view);
-        vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
-        vh.nameContainer = (LinearLayout) findViewById(R.id.name_container);
-        vh.tabs = (TabLayout) findViewById(R.id.tabs);
-        vh.aboutTextView = (TextView) findViewById(R.id.fruit_about);
-        vh.aboutTabItem = (TabItem) findViewById(R.id.about_tab_btn);
-        vh.fruitDetails = (RecyclerView) findViewById(R.id.fruitDetails);
+        vh.fruitProducerTextView = (TextView) findViewById(R.id.producer_text_view);
+        vh.tabLayout = (TabLayout) findViewById(R.id.tabs);
+        vh.fruitDescriptionRecyclerView = (RecyclerView) findViewById(R.id.fruitDetails);
+        vh.fruitAboutTextView = (TextView) findViewById(R.id.fruit_about);
 
-        vh.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        // Setting up the image slider.
+        imagesViewPager = (ViewPager) findViewById(R.id.imagesSlider);
+        imagesViewPagerAdapter = new ViewPagerAdapter(DetailsActivity.this, images);
+        imagesViewPager.setAdapter(imagesViewPagerAdapter);
+
+        // Update the vh components with the details of the selected fruit.
+        vh.header.setText(fruit.getName());
+        setColour(fruit, vh.titleContainerLinearLayout, vh.tabLayout);
+        vh.fruitNameTextView.setText(fruit.getName());
+        vh.fruitProducerTextView.setText(fruit.getProducer());
+
+        fruitDescriptionAdapter = new FruitDetailsAdapter(fruit.getAttributeNames(),
+                                                          fruit.getAttributeValues());
+        vh.fruitDescriptionRecyclerView.setAdapter(fruitDescriptionAdapter); // Attach the adapter
+                                                                             // to the recyclerview
+                                                                             // to populate items.
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+        vh.fruitDescriptionRecyclerView.setLayoutManager(lm);
+
+        vh.fruitAboutTextView.setText(fruit.getDescription());
+
+        // Listener for which tab (description or about) is selected.
+        vh.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch(tab.getPosition()) {
                     case 0:
-                        vh.aboutTextView.setVisibility(View.GONE);
-                        vh.fruitDetails.setVisibility(View.VISIBLE);
+                        vh.fruitAboutTextView.setVisibility(View.GONE);
+                        vh.fruitDescriptionRecyclerView.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        vh.aboutTextView.setVisibility(View.VISIBLE);
-                        vh.fruitDetails.setVisibility(View.GONE);
+                        vh.fruitAboutTextView.setVisibility(View.VISIBLE);
+                        vh.fruitDescriptionRecyclerView.setVisibility(View.GONE);
                         break;
                 }
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-        vh.header.setText(fruit.getName());
-        vh.fruitNameTextView.setText(fruit.getName());
-        vh.producerTextView.setText(fruit.getProducer());
-        setColour(fruit, vh.nameContainer, vh.tabs);
-        vh.aboutTextView.setText(fruit.getDescription());
-
-        // Initializing the ViewPager Object
-        mViewPager = (ViewPager) findViewById(R.id.imagesSlider);
-
-        // Initializing the ViewPagerAdapter
-        mViewPagerAdapter = new ViewPagerAdapter(DetailsActivity.this, images);
-
-        // Adding the Adapter to the ViewPager
-        mViewPager.setAdapter(mViewPagerAdapter);
-
-        // Lookup the recyclerview in activity layout
-        fruitDetails = (RecyclerView) findViewById(R.id.fruitDetails);
-
-        // Create adapter passing in the sample user data
-        adapter = new FruitDetailsAdapter(fruit.getAttributeNames(), fruit.getAttributeValues());
-        // Attach the adapter to the recyclerview to populate items
-        fruitDetails.setAdapter(adapter);
-
-        // Create a LayoutManager
-        LinearLayoutManager lm = new LinearLayoutManager(this);
-
-        // Set layout manager to position the items
-        fruitDetails.setLayoutManager(lm);
     }
 
+    // Set the theme colours for each fruit for DetailsActivity.
     private void setColour(IProduct fruit, LinearLayout element, TabLayout layout) {
         switch (fruit.getCategory()) {
             case "Apple":
