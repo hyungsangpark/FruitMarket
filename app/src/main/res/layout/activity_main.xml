@@ -25,7 +25,7 @@
         <!--    Fix DP SP error (dp for elements, sp for text) -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -116,19 +116,19 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="6dp"
-                android:fillViewport="true">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="12dp"/>
-            </LinearLayout>
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="6dp"
+                    android:nestedScrollingEnabled="false" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
