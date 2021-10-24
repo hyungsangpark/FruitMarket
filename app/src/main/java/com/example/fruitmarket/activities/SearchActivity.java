@@ -123,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // Category filter array
         rvButtons = findViewById(R.id.category_filter_recycler_view);
-        // TODO: Modify this array to import from a legitimate source of these categories.
+
         categories = new ArrayList<>(Arrays.asList("apples", "blueberries", "feijoas", "kiwifruits", "oranges"));
         categoryFilterButtonsAdapter = new CategoryFilterAdapter(categories, (selectedCategory) -> {
 
