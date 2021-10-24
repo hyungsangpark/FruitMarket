@@ -13,6 +13,9 @@ import com.example.fruitmarket.R;
 
 import java.util.Objects;
 
+/**
+ * Adapter for dealing with the GUI and data for ViewPager usages in the app.
+ */
 public class ViewPagerAdapter extends PagerAdapter {
 
     // Context object

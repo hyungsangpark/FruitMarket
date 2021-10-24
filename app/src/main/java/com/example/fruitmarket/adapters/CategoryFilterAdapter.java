@@ -18,6 +18,9 @@ import com.google.android.material.chip.Chip;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Adapter for dealing with the GUI and data for categories.
+ */
 public class CategoryFilterAdapter extends RecyclerView.Adapter<CategoryFilterAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -51,8 +54,6 @@ public class CategoryFilterAdapter extends RecyclerView.Adapter<CategoryFilterAd
 
             // Run the on click event.
             filterButtonOnClick.accept(clickedCategory);
-
-//            Toast.makeText(mContext, clickedCategory + " is filtered.", Toast.LENGTH_SHORT).show();
         }
     }
 

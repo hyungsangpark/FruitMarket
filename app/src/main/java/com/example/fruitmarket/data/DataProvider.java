@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This class contains all the functionalities related to fetching data from the database and
+ * providing those to the corresponding obejcts/classes.
+ */
 public class DataProvider {
 
     private final int NUM_CATEGORIES = 5;
@@ -42,6 +46,12 @@ public class DataProvider {
         return fruitsMap.get(category);
     }
 
+    /**
+     * Return the list of fruits that match with the searchTerm and comply with the filters applied
+     * @param searchTerm
+     * @param filters
+     * @return List<Fruit> List of fruits resulted from the search
+     */
     public List<Fruit> getFruitsFromSearchTerm(String searchTerm, List<String> filters) {
         List<Fruit> fruitsList = new ArrayList<>();
         //with no filter
@@ -60,6 +70,11 @@ public class DataProvider {
         return fruitsList;
     }
 
+    /**
+     * Return the list of fruits that match with the searchTerm
+     * @param searchTerm
+     * @return List<Fruit> List of fruits resulted from the search
+     */
     private List<Fruit> findUsingSearchTerm(String searchTerm) {
         List<Fruit> fruitsList = new ArrayList<>();
         for (List<Fruit> fullFruitsList : fruitsMap.values()) {
@@ -114,6 +129,10 @@ public class DataProvider {
                         "Popularity could not be updated to " + fruit.getPopularity() + "."));
     }
 
+    /**
+     * Search for the top ten most popular fruits
+     * @return List<Fruit> Top ten most popular fruits
+     */
     public List<Fruit> getTopTenPicksOfFruits() {
         List<Fruit> allFruits = new ArrayList<>();
         for (List<Fruit> category : fruitsMap.values()) {

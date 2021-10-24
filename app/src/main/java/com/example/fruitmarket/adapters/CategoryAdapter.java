@@ -21,6 +21,9 @@ import com.example.fruitmarket.models.Category;
 
 import java.util.List;
 
+/**
+ * Adapter for dealing with the GUI and data for categories.
+ */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>  {
 
     public static final String CATEGORY_LIST_KEY = "category";
@@ -54,10 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             //Starts the new activity with the intent and sets sliding transitions
             activty.startActivity(intent);
             activty.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-
-
         }
-
     }
 
     public CategoryAdapter(List<Category> categories){

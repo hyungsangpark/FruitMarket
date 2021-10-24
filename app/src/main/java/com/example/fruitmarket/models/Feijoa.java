@@ -3,6 +3,9 @@ package com.example.fruitmarket.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fruits that correspond to apple.
+ */
 public class Feijoa extends Fruit {
     Boolean ripe;
     String skinColour;
@@ -45,6 +48,10 @@ public class Feijoa extends Fruit {
         this.seedToPulpRatio = seedToPulpRatio;
     }
 
+    /**
+     * Return all unique attributes names of this fruit as a list
+     * @return List<String> List of all unique attributes names of this fruit
+     */
     public List<String> getAttributeNames() {
         List<String> names = new ArrayList<>();
         names.addAll(getFruitAttributeNames());
@@ -56,6 +63,10 @@ public class Feijoa extends Fruit {
         return names;
     }
 
+    /**
+     * Return all unique attributes values of this fruit as a list
+     * @return List<String> List of all unique attributes values of this fruit
+     */
     public List<String> getAttributeValues() {
         List<String> values = new ArrayList<>();
         values.addAll(getFruitAttributeValues());
