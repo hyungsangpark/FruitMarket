@@ -1,6 +1,7 @@
 package com.example.fruitmarket.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,13 +16,16 @@ import com.example.fruitmarket.adapters.FruitDetailsAdapter;
 import com.example.fruitmarket.adapters.ViewPagerAdapter;
 import com.example.fruitmarket.data.DataProvider;
 import com.example.fruitmarket.models.IProduct;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
-        TextView fruitNameTextView, producerTextView, header;
+        TextView fruitNameTextView, producerTextView, header, aboutTextView;
         LinearLayout nameContainer;
         TabLayout tabs;
+        TabItem aboutTabItem;
+        RecyclerView fruitDetails;
     }
 
     DetailsActivity.ViewHolder vh;
@@ -51,8 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         fruit = (IProduct) getIntent().getSerializableExtra("IProduct");
-        fruit.incrementPopularity();
-        DataProvider.getInstance().updatePopularityToFirestore(fruit);
+        DataProvider.getInstance().updatePopularity(fruit);
 
         for (int i = 0; i < 3; i++) {
             String imageName = fruit.getImages().get(i).split("\\.")[0];
@@ -67,11 +70,41 @@ public class DetailsActivity extends AppCompatActivity {
         vh.producerTextView = (TextView) findViewById(R.id.producer_text_view);
         vh.nameContainer = (LinearLayout) findViewById(R.id.name_container);
         vh.tabs = (TabLayout) findViewById(R.id.tabs);
+        vh.aboutTextView = (TextView) findViewById(R.id.fruit_about);
+        vh.aboutTabItem = (TabItem) findViewById(R.id.about_tab_btn);
+        vh.fruitDetails = (RecyclerView) findViewById(R.id.fruitDetails);
+
+        vh.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch(tab.getPosition()) {
+                    case 0:
+                        vh.aboutTextView.setVisibility(View.GONE);
+                        vh.fruitDetails.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        vh.aboutTextView.setVisibility(View.VISIBLE);
+                        vh.fruitDetails.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         vh.header.setText(fruit.getName());
         vh.fruitNameTextView.setText(fruit.getName());
         vh.producerTextView.setText(fruit.getProducer());
         setColour(fruit, vh.nameContainer, vh.tabs);
+        vh.aboutTextView.setText(fruit.getDescription());
 
         // Initializing the ViewPager Object
         mViewPager = (ViewPager) findViewById(R.id.imagesSlider);

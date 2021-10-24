@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -84,10 +85,26 @@ public class DataProvider {
         return "";
     }
 
-    public void updatePopularityToFirestore(IProduct fruit) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    /**
+     * Increment popularity of a fruit and updates it to Firestore database.
+     *
+     * This will update popularity of a **matching** fruit in the fruits map inside this DataProvider,
+     * meaning if the category name and id of a fruit is identical, the fruit variable passed in does
+     * not necessarily have to be the specific fruit instance to update.
+     * @param fruit Fruit to increment.
+     */
+    public void updatePopularity(IProduct fruit) {
+
         // Convert getCategory() to collection name.
         String collectionName = retrieveCollectionName(fruit.getCategory());
+        // Update popularity to fruitsmap.
+        List<Fruit> fruitsInCategory = getFruitsOfCategory(collectionName);
+        for (Fruit actualFruit : fruitsInCategory) {
+            if (actualFruit.getId() == fruit.getId()) actualFruit.incrementPopularity();
+        }
+
+        // Update Popularity to Firestore.
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(collectionName)
                 .document(collectionName + fruit.getId())
                 .update("popularity", fruit.getPopularity())
@@ -95,5 +112,14 @@ public class DataProvider {
                         "Popularity updated to " + fruit.getPopularity() + "."))
                 .addOnFailureListener(e -> Log.w(fruit.getCategory() + " Collection Update",
                         "Popularity could not be updated to " + fruit.getPopularity() + "."));
+    }
+
+    public List<Fruit> getTopTenPicksOfFruits() {
+        List<Fruit> allFruits = new ArrayList<>();
+        for (List<Fruit> category : fruitsMap.values()) {
+            allFruits.addAll(category);
+        }
+        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
+        return allFruits.subList(0, 10);
     }
 }

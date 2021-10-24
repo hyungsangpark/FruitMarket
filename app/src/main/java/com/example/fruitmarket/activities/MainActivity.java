@@ -1,5 +1,7 @@
 package com.example.fruitmarket.activities;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
         fetchFruits();
     }
 
-    private Map<String, List<Fruit>> fruitsMap;
+
+
+//    private Map<String, List<Fruit>> fruitsMap;
 
     public void fetchFruits() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         fruitCategoryClasses.put("kiwifruits", new Kiwifruit());
         fruitCategoryClasses.put("oranges", new Orange());
 
-        fruitsMap = new HashMap<>();
+        Map<String, List<Fruit>> fruitsMap = new HashMap<>();
 
         for (String collection : fruitCategoryClasses.keySet()) {
             fruitsMap.put(collection, new ArrayList<>());
@@ -105,11 +109,10 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             if (everyCategoryFetched[0]) {
-                                List<Fruit> topPickFruits = getTopTenFruits();
-                                propagateTopPicksAdaptor(topPickFruits);
-                                propagateCategoriesAdaptor();
-
                                 dataProvider.provideData(fruitsMap);
+
+                                propagateTopPicksAdaptor();
+                                propagateCategoriesAdaptor();
 
                                 // hide the progressbar.
                                 progressBar.setVisibility(View.GONE);
@@ -121,17 +124,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<Fruit> getTopTenFruits() {
-        List<Fruit> allFruits = new ArrayList<>();
-        for (List<Fruit> category : fruitsMap.values()) {
-            allFruits.addAll(category);
-        }
-        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
-        return allFruits.subList(0, 10);
-    }
+//    private List<Fruit> getTopTenFruits() {
+//        List<Fruit> allFruits = new ArrayList<>();
+//        for (List<Fruit> category : fruitsMap.values()) {
+//            allFruits.addAll(category);
+//        }
+//        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
+//        return allFruits.subList(0, 10);
+//    }
 
-    private void propagateTopPicksAdaptor(List<Fruit> topPickFruits) {
+    private void propagateTopPicksAdaptor() {
+        List<Fruit> topPickFruits = dataProvider.getTopTenPicksOfFruits();
+        Log.d(TAG, "propagateTopPicksAdapter: new_top_picks - " + topPickFruits);
         TopPicksAdapter topPicksAdapter = new TopPicksAdapter(topPickFruits);
+        Log.d(TAG, "propagateTopPicksAdaptor: topPicksAdapter - " + topPicksAdapter);
         topPicksRecyclerView.setAdapter(topPicksAdapter);
         LinearLayoutManager topPicksLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         topPicksRecyclerView.setLayoutManager(topPicksLayoutManager);
@@ -145,46 +151,27 @@ public class MainActivity extends AppCompatActivity {
         categoriesRecyclerView.setLayoutManager(categoriesLayoutManager);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main_menu, menu);
-//        final MenuItem searchItem = menu.findItem(R.id.action_search);
-//        final SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            //Check whether the user has submitted their search
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//
-//                // Reset SearchView
-//                searchView.clearFocus();
-//                searchView.setQuery("", false);
-//                searchView.setIconified(true);
-//                searchItem.collapseActionView();
-//
-//                //Create intent for SearchActivity containing the search query
-//               /* Intent searchIntent = new Intent(getBaseContext(), SearchActivity.class);
-//                searchIntent.putExtra("searchQuery", query);
-//                startActivity(searchIntent);*/
-//
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
+//    For when the user returns to the MainActivity
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        //Refresh top picks
+        Log.d(TAG, "onRestart: Hi, returned to main");
 
-    //For when the user returns to the MainActivity
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//        //Refresh top picks
-//        topPicksAdapter = new TopPicksAdapter(topPicks);
+        TopPicksAdapter topPicksAdapter = (TopPicksAdapter) topPicksRecyclerView.getAdapter();
+        Log.d(TAG, "onRestart: topPicksAdapter - " + topPicksAdapter);
+
+        List<Fruit> newTopPicks = dataProvider.getTopTenPicksOfFruits();
+        Log.d(TAG, "onRestart: new_top_picks - " + newTopPicks);
+        TopPicksAdapter updatedTopPicksAdapter = new TopPicksAdapter(newTopPicks);
+        topPicksRecyclerView.setAdapter(updatedTopPicksAdapter);
+
+//        if (topPicksAdapter != null) {
+//            Log.d(TAG, "onRestart: notifying change on topPicksAdapter");
+//            topPicksRecyclerView.getAdapter().notifyDataSetChanged();
+//        }
+
 //        dataProvider.getMostPopular(topPicksAdapter);
 //        topPicksRecyclerView.setAdapter(topPicksAdapter);
-//    }
+    }
 }
