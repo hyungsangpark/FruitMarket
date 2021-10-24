@@ -4,12 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.R;
+import com.example.fruitmarket.models.IProduct;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
@@ -72,5 +77,47 @@ public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapte
     @Override
     public int getItemCount() {
         return mAttributeNames.size();
+    }
+
+    // Set the theme colours for each fruit for DetailsActivity.
+    public void setColour(IProduct fruit, LinearLayout element, TabLayout layout,
+                           AppCompatActivity activity) {
+        switch (fruit.getCategory()) {
+            case "Apple":
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.apples_dark, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.apples_dark, null));
+                break;
+            case "Blueberry":
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.blueberries_dark, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.blueberries_dark, null));
+                break;
+            case "Feijoa":
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.feijoas_dark, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.feijoas_dark, null));
+                break;
+            case "Kiwifruit":
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.kiwifruits_dark, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.kiwifruits_dark, null));
+                break;
+            case "Orange":
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.oranges_dark, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.oranges_dark, null));
+                break;
+            default:
+                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.purple_500, null));
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                        R.color.purple_500, null));
+        }
     }
 }

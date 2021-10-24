@@ -20,8 +20,6 @@ import com.google.android.material.tabs.TabLayout;
 
 /**
  * Shows the photos and details of the selected fruit.
- *
- * Author: Dave Shin
  */
 public class DetailsActivity extends AppCompatActivity {
     class ViewHolder {
@@ -84,12 +82,6 @@ public class DetailsActivity extends AppCompatActivity {
         imagesViewPagerAdapter = new ViewPagerAdapter(DetailsActivity.this, images);
         imagesViewPager.setAdapter(imagesViewPagerAdapter);
 
-        // Update the vh components with the details of the selected fruit.
-        vh.header.setText(fruit.getName());
-        setColour(fruit, vh.titleContainerLinearLayout, vh.tabLayout);
-        vh.fruitNameTextView.setText(fruit.getName());
-        vh.fruitProducerTextView.setText(fruit.getProducer());
-
         fruitDescriptionAdapter = new FruitDetailsAdapter(fruit.getAttributeNames(),
                                                           fruit.getAttributeValues());
         vh.fruitDescriptionRecyclerView.setAdapter(fruitDescriptionAdapter); // Attach the adapter
@@ -98,6 +90,12 @@ public class DetailsActivity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(this);
         vh.fruitDescriptionRecyclerView.setLayoutManager(lm);
 
+        // Update the vh components with the details of the selected fruit.
+        vh.header.setText(fruit.getName());
+        fruitDescriptionAdapter.setColour(fruit, vh.titleContainerLinearLayout,
+                                          vh.tabLayout, this);
+        vh.fruitNameTextView.setText(fruit.getName());
+        vh.fruitProducerTextView.setText(fruit.getProducer());
         vh.fruitAboutTextView.setText(fruit.getDescription());
 
         // Listener for which tab (description or about) is selected.
@@ -122,47 +120,6 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-    }
-
-    // Set the theme colours for each fruit for DetailsActivity.
-    private void setColour(IProduct fruit, LinearLayout element, TabLayout layout) {
-        switch (fruit.getCategory()) {
-            case "Apple":
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.apples_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.apples_dark, null));
-                break;
-            case "Blueberry":
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.blueberries_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.blueberries_dark, null));
-                break;
-            case "Feijoa":
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.feijoas_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.feijoas_dark, null));
-                break;
-            case "Kiwifruit":
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.kiwifruits_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.kiwifruits_dark, null));
-                break;
-            case "Orange":
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.oranges_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.oranges_dark, null));
-                break;
-            default:
-                element.setBackgroundColor(ResourcesCompat.getColor(getResources(),
-                        R.color.purple_500, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(),
-                        R.color.purple_500, null));
-        }
     }
 
     @Override
