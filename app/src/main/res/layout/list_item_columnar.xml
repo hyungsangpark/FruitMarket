@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="12dp"
@@ -10,40 +10,52 @@
     android:backgroundTint="@color/design_default_color_background">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="131dp">
+        android:layout_width="157dp"
+        android:layout_height="181dp">
 
         <ImageView
             android:id="@+id/list_item_image"
-            android:layout_width="372dp"
-            android:layout_height="68dp"
+            android:layout_width="139dp"
+            android:layout_height="82dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="55dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginBottom="89dp"
             android:scaleType="centerCrop"
             android:src="@drawable/apple_cat_img" />
 
         <TextView
             android:id="@+id/list_item_price"
-            android:layout_width="111dp"
-            android:layout_height="26dp"
+            android:layout_width="114dp"
+            android:layout_height="22dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="102dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="150dp"
             android:layout_marginRight="295dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginBottom="9dp"
             android:text="$9.99 per KG"
             android:textSize="16dp"
             android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/list_item_producer"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="127dp"
+            android:layout_marginBottom="32dp"
+            android:text="Yuwei's Orchard" />
 
         <TextView
             android:id="@+id/list_item_name"
@@ -52,28 +64,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="78dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="98dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="295dp"
-            android:layout_marginBottom="26dp"
+            android:layout_marginBottom="52dp"
             android:text="Gala Apples"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/list_item_producer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="275dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="32dp"
-            android:text="Yuwei's Orchard" />
-
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

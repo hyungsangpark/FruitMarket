@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fruitmarket.models.Fruit;
@@ -33,6 +34,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private List<Fruit> fruitsList;
     private Context context;
+    private boolean isPureCategory;
+    private String category;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -72,10 +75,43 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
+        // determine whether its apples and oranges, or blueberries, kiwifruits and feijoas
+        //Grab first fruit to see if they're all from the same category
+        String categoryToCheckWith = fruitsList.get(0).getCategory();
+        for (Fruit fruit: fruitsList){
+            if (!fruit.getCategory().equals(categoryToCheckWith)){
+                //This means there are mixed items so horizontal default can be used
+                return setHorizontalLayout(parent);
+            }
+        }
+        // if it is not mixed:
+        if (categoryToCheckWith.equals("Apple") || categoryToCheckWith.equals("Orange")){
+            isPureCategory = true;
+            category = categoryToCheckWith;
+            return setHorizontalLayout(parent);
+        } else { //for blueberries, kiwifruits and feijoas:
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View listItemView = inflater.inflate(R.layout.list_item_columnar, parent, false);
+            ViewHolder holder = new ViewHolder(listItemView);
+            return holder;
+        }
+    }
+
+    private ViewHolder setHorizontalLayout(ViewGroup parent){
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View listItemView = inflater.inflate(R.layout.list_item_horizontal, parent, false);
-        ViewHolder holder = new ViewHolder(listItemView);
-        return holder;
+        return new ViewHolder(listItemView);
+    }
+
+    public RecyclerView setRecyclerViewDependingOnCategory(RecyclerView recyclerView){
+        if (isPureCategory){
+            if (category.equals("Blueberry") || category.equals("Kiwifruit") || category.equals("Feijoa")){
+                recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+                return recyclerView;
+            }
+        }
+        return recyclerView;
     }
 
     @SuppressLint("SetTextI18n")
@@ -95,7 +131,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 //            vHolder.topPickImageView.setImageResource(imageID);
             Log.d(TAG, "onBindViewHolder: thumbnail - " + imageName + " with ID: " + imageID);
         }
-
     }
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res,

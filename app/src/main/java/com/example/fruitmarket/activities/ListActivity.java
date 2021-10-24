@@ -53,18 +53,17 @@ public class ListActivity extends AppCompatActivity {
             main_menu_title.setText(searchTermDataPassedIn);
         }
 
-        //Setting the recycler view
+        //Setting the recycler view to default horizontal cards
         listItemsRecyclerView = (RecyclerView) findViewById(R.id.fruits_list);
 
         //Creating and setting the adapter to the recycler view
         listAdapter = new ListAdapter(fruitsList);
+        listItemsRecyclerView = listAdapter.setRecyclerViewDependingOnCategory(listItemsRecyclerView);
         listItemsRecyclerView.setAdapter(listAdapter);
 
         //Creating and setting a layout manager for the recycler view
         listItemsLayoutManager = new LinearLayoutManager(this);
         listItemsRecyclerView.setLayoutManager(listItemsLayoutManager);
-
-
     }
 
     @Override
