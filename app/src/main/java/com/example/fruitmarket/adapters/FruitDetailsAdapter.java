@@ -81,42 +81,42 @@ public class FruitDetailsAdapter extends RecyclerView.Adapter<FruitDetailsAdapte
 
     // Set the theme colours for each fruit for DetailsActivity.
     public void setColour(IProduct fruit, LinearLayout element, TabLayout layout,
-                           AppCompatActivity activity) {
+                          Context context) {
         switch (fruit.getCategory()) {
             case "Apple":
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.apples_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.apples_dark, null));
                 break;
             case "Blueberry":
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.blueberries_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.blueberries_dark, null));
                 break;
             case "Feijoa":
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.feijoas_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.feijoas_dark, null));
                 break;
             case "Kiwifruit":
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.kiwifruits_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.kiwifruits_dark, null));
                 break;
             case "Orange":
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.oranges_dark, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.oranges_dark, null));
                 break;
             default:
-                element.setBackgroundColor(ResourcesCompat.getColor(activity.getResources(),
+                element.setBackgroundColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.purple_500, null));
-                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(activity.getResources(),
+                layout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(context.getResources(),
                         R.color.purple_500, null));
         }
     }
