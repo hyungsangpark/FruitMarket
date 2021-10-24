@@ -2,8 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,25 +13,25 @@
             android:id="@+id/text_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
-            android:text="Current Price:" />
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:text="@string/fruit_detail_descriptor_placeholder" />
 
         <TextView
             android:id="@+id/text_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textAlignment="gravity"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:gravity="right"
+            android:text="@string/fruit_detail_value_placeholder"
+            android:textAlignment="gravity" />
 
         <androidx.constraintlayout.widget.Barrier
             android:layout_width="match_parent"

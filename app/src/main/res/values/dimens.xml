@@ -4,5 +4,6 @@
     <dimen name="category_filter_button_horizontal_margin">12dp</dimen>
     <dimen name="category_filter_button_vertical_margin">8dp</dimen>
     <dimen name="category_filter_button_stroke_width">2dp</dimen>
+    <dimen name="category_image_height">100dp</dimen>
 
 </resources>

@@ -160,18 +160,8 @@ public abstract class Fruit implements IProduct, Serializable {
     @Override
     public String toString() {
         return "Fruit{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", producer='" + producer + '\'' +
-                ", images=" + images +
-                ", variety='" + variety + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", priceMetric=" + priceMetric +
-                ", inStock=" + inStock +
+                "name='" + name + '\'' +
                 ", popularity=" + popularity +
-                ", isFeatured=" + isFeatured +
                 '}';
     }
 }

@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8sp"
-    android:padding="8dp"
     android:backgroundTint="@color/design_default_color_background"
     android:elevation="30dp"
+    android:padding="8dp"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
@@ -16,20 +16,22 @@
 
         <ImageView
             android:id="@+id/category_image"
-            android:layout_width="376dp"
-            android:layout_height="99dp"
-            android:layout_margin="10dp"
-            android:scaleType="centerCrop" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/category_image_height"
+            android:contentDescription="@string/category_image_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ambrosia_apple_rosie_1" />
 
         <TextView
             android:id="@+id/category_text"
-            android:layout_width="354dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="12dp"
-            android:text="hi"
+            android:layout_marginVertical="8dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/fruit_name_placeholder"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

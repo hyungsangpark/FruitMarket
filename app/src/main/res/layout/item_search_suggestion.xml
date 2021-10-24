@@ -14,14 +14,14 @@
         android:layout_marginEnd="25dp"
         android:visibility="visible"
         android:src="@drawable/ic_schedule"
-        android:contentDescription="Search History Suggestion Logo" />
+        android:contentDescription="@string/search_history_searched_icon_description" />
 
     <TextView
         android:id="@+id/item_search_suggestion_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="kiwifruit gold"
+        android:text="@string/search_keyword_placeholder"
         android:textSize="16sp" />
 
 </LinearLayout>

@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">FruitMarket</string>
+    <string name="fruit_name_placeholder">Gala Apple</string>
+    <string name="producer_placeholder">Yuwei\'s Orchard</string>
+    <string name="description_title">Description</string>
+    <string name="about_title">About</string>
+    <string name="fruit_description_placeholder">Lorem ipsum dolor sit amet</string>
+    <string name="details_activity_image_slider_content_description">Sliding Images of Fruit Item</string>
+    <string name="search_hint">Search Fruit</string>
+    <string name="category_image_description">Sample Image of Fruits of the Category</string>
+    <string name="fruit_detail_descriptor_placeholder">Current Price:</string>
+    <string name="fruit_detail_value_placeholder">TextView</string>
+    <string name="search_category_filter_button_label_placeholder">Grapes</string>
+    <string name="search_history_searched_icon_description">Search History Suggestion Logo</string>
+    <string name="search_keyword_placeholder">kiwifruit gold</string>
+    <string name="list_activity_item_price_placeholder">$9.99 per KG</string>
+    <string name="top_picks_item_image_description_placeholder">Image of Top Picks Item</string>
 </resources>
