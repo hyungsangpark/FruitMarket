@@ -20,6 +20,9 @@ import com.example.fruitmarket.models.Fruit;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shows the list of fruits in a chosen category.
+ */
 public class ListActivity extends AppCompatActivity {
 
     RecyclerView listItemsRecyclerView;
