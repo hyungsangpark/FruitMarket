@@ -61,7 +61,6 @@ public class ListActivity extends AppCompatActivity {
 
         //Creating and setting the adapter to the recycler view
         listAdapter = new ListAdapter(fruitsList);
-        listItemsRecyclerView = listAdapter.setRecyclerViewDependingOnCategory(listItemsRecyclerView);
         listItemsRecyclerView.setAdapter(listAdapter);
 
         //Creating and setting a layout manager for the recycler view
