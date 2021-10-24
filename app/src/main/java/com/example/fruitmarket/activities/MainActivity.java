@@ -36,6 +36,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Shows the list of top picks and categories.
+ */
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView topPicksRecyclerView;
@@ -72,14 +75,10 @@ public class MainActivity extends AppCompatActivity {
         fetchFruits();
     }
 
-
-
-//    private Map<String, List<Fruit>> fruitsMap;
-
+    // Fetch the necessary data from the database.
     public void fetchFruits() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // TODO: Refactor it out later.
         Map<String, Fruit> fruitCategoryClasses = new HashMap<>();
         fruitCategoryClasses.put("apples", new Apple());
         fruitCategoryClasses.put("blueberries", new Blueberry());
@@ -124,15 +123,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private List<Fruit> getTopTenFruits() {
-//        List<Fruit> allFruits = new ArrayList<>();
-//        for (List<Fruit> category : fruitsMap.values()) {
-//            allFruits.addAll(category);
-//        }
-//        allFruits.sort(Comparator.comparing(Fruit::getPopularity).reversed());
-//        return allFruits.subList(0, 10);
-//    }
-
     private void propagateTopPicksAdaptor() {
         List<Fruit> topPickFruits = dataProvider.getTopTenPicksOfFruits();
         Log.d(TAG, "propagateTopPicksAdapter: new_top_picks - " + topPickFruits);
@@ -151,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         categoriesRecyclerView.setLayoutManager(categoriesLayoutManager);
     }
 
-//    For when the user returns to the MainActivity
+    // For when the user returns to the MainActivity
     @Override
     public void onRestart(){
         super.onRestart();
@@ -165,13 +155,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onRestart: new_top_picks - " + newTopPicks);
         TopPicksAdapter updatedTopPicksAdapter = new TopPicksAdapter(newTopPicks);
         topPicksRecyclerView.setAdapter(updatedTopPicksAdapter);
-
-//        if (topPicksAdapter != null) {
-//            Log.d(TAG, "onRestart: notifying change on topPicksAdapter");
-//            topPicksRecyclerView.getAdapter().notifyDataSetChanged();
-//        }
-
-//        dataProvider.getMostPopular(topPicksAdapter);
-//        topPicksRecyclerView.setAdapter(topPicksAdapter);
     }
 }
